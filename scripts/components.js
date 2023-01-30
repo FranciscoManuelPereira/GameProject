@@ -39,31 +39,28 @@ class Player {
     } */
     crashWith(boundary) {
         return !(
-          this.bottomLimit() < boundary.top() ||
-          this.topLimit() > boundary.bottom() ||
-          this.rightLimit() < boundary.left() ||
-          this.leftLimit() > boundary.right()
+          this.bottomLimit() + this.speedY < boundary.top() ||
+          this.topLimit() + this.speedY > boundary.bottom() ||
+          this.rightLimit() + this.speedX < boundary.left() ||
+          this.leftLimit() + this.speedX > boundary.right()
         );
       }
 
     movement() {
         //console.log(this)
-        if (this.keys.up && this.lastKey === this.up){
-            this.speedY = -1;
-            console.log("up", this)
-        } 
-            else if (this.keys.left && this.lastKey === this.left) this.speedX = -1;
-            else if (this.keys.down && this.lastKey === this.down) this.speedY = 1;
-            else if (this.keys.right && this.lastKey === this.right) this.speedX = 1; 
+        if (this.keys.up && this.lastKey === this.up) this.speedY = -1;
+        else if (this.keys.left && this.lastKey === this.left) this.speedX = -1;
+        else if (this.keys.down && this.lastKey === this.down) this.speedY = 1;
+        else if (this.keys.right && this.lastKey === this.right) this.speedX = 1; 
+
         this.level.boundaries.forEach((boundary) => {
          
-        if (this.crashWith(boundary)) {
-            console.log('Collided')
-       if (this.keys.up && this.lastKey === this.up) this.speedY = 0;
-        else if (this.keys.left && this.lastKey === this.left) this.speedX = 0;
-        else if (this.keys.down && this.lastKey === this.down) this.speedY = 0;
-        else if (this.keys.right && this.lastKey === this.right) this.speedX = 0; 
-        } 
+            if (this.crashWith(boundary)) {
+                if (this.keys.up && this.lastKey === this.up) this.speedY = 0;
+                    else if (this.keys.left && this.lastKey === this.left) this.speedX = 0;
+                    else if (this.keys.down && this.lastKey === this.down) this.speedY = 0;
+                    else if (this.keys.right && this.lastKey === this.right) this.speedX = 0; 
+                    } 
     }) 
     this.x += this.speedX;
     this.y += this.speedY;

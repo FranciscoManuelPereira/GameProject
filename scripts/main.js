@@ -87,16 +87,16 @@ window.addEventListener('keydown', (event) => {
 window.addEventListener('keyup', (event) => {
     switch (event.key) {
         case 'w':
-            redPlayer.keys.w = false
+            redPlayer.keys.up = false
             break;
         case 'a': 
-            redPlayer.keys.a = false    
+            redPlayer.keys.left = false    
             break;
         case 's': 
-            redPlayer.keys.s = false     
+            redPlayer.keys.down = false     
             break;
         case 'd': 
-            redPlayer.keys.d = false
+            redPlayer.keys.right = false
             break;
         case '8':
             ylwKeys.eight = false
