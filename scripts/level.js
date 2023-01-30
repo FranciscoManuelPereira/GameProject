@@ -55,16 +55,20 @@ class Level {
         this.ctx.clearRect(0, 0, this.width, this.height)
         redPlayer.draw();
         ylwPlayer.draw();
+
+        redPlayer.movement();
+        ylwPlayer.movement();
         this.boundaries.forEach((boundary) => {
             boundary.draw()
         })
-        redPlayer.movement();
+
+        
         redPlayer.speedX = 0;
         redPlayer.speedY = 0;
 
         ylwPlayer.speedX = 0;
         ylwPlayer.speedY = 0;
-        ylwPlayer.movement();
+
 
     }
 

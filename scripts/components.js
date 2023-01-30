@@ -48,16 +48,29 @@ class Player {
 
     movement() {
         //console.log(this)
-        if (this.keys.up && this.lastKey === this.up)  this.speedY = -3;
-
-
-
+        if (this.keys.up && this.lastKey === this.up) this.speedY = -2;
         
-        else if (this.keys.left && this.lastKey === this.left) this.speedX = -3;
-        else if (this.keys.down && this.lastKey === this.down) this.speedY = 3;
-        else if (this.keys.right && this.lastKey === this.right) this.speedX = 3; 
+ /*            for (let i = 0; i < this.level.boundaries.length; i++) {
+                const boundary = this.level.boundaries[i];
+                if (this.crashWith({...this, speedY: -2}, boundary)) {
+                    this.speedY = 0
+                    break
+                } else this.speedY = -2 */
+        else if (this.keys.left && this.lastKey === this.left) this.speedX = -2;
+        else if (this.keys.down && this.lastKey === this.down) this.speedY = 2;
+        else if (this.keys.right && this.lastKey === this.right) this.speedX = 2; 
 
-        for (let i = 0; i < this.level.boundaries.length; i++) {
+        this.level.boundaries.forEach((boundary) => {
+         
+            if (this.crashWith(boundary)) {
+                if (this.keys.up && this.lastKey === this.up) this.speedY = 0;
+                    else if (this.keys.left && this.lastKey === this.left) this.speedX = 0;
+                    else if (this.keys.down && this.lastKey === this.down) this.speedY = 0;
+                    else if (this.keys.right && this.lastKey === this.right) this.speedX = 0; 
+            } 
+    }) 
+
+/*         for (let i = 0; i < this.level.boundaries.length; i++) {
             const boundary = this.level.boundaries[i];
             if (this.keys.up && this.lastKey === this.up && this.crashWith(boundary)) {
                 this.speedY = 0;
@@ -72,7 +85,7 @@ class Player {
             this.speedX = 0; 
             break;
             } 
-        } 
+        }  */
 
         this.x += this.speedX;
         this.y += this.speedY;
@@ -97,15 +110,7 @@ class Player {
             } 
         } */
 
-/*         this.level.boundaries.forEach((boundary) => {
-         
-            if (this.crashWith(boundary)) {
-                if (this.keys.up && this.lastKey === this.up) this.speedY = 0;
-                    else if (this.keys.left && this.lastKey === this.left) this.speedX = 0;
-                    else if (this.keys.down && this.lastKey === this.down) this.speedY = 0;
-                    else if (this.keys.right && this.lastKey === this.right) this.speedX = 0; 
-            } 
-    })  */
+
     
 
         /* if (redKeys.w.pressed && lastRedKey === 'w') {
