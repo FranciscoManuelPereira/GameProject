@@ -10,7 +10,7 @@ const startButton = document.getElementById('start-button');
 
 const redPlayer = new Player (ctx, 0, 192, 0, 0, 'red', 'w', 's', 'a', 'd')
 redPlayer.draw();
-const ylwPlayer = new Player (ctx, 0, 230, 0, 0, 'yellow', "eight", "five", "four", "six")
+const ylwPlayer = new Player (ctx, 0, 230, 0, 0, 'yellow', "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight")
 ylwPlayer.draw();
 
 //--------------------------------------------------------------CREATING LEVEL
@@ -65,21 +65,21 @@ window.addEventListener('keydown', (event) => {
             redPlayer.keys.right = true
             redPlayer.lastKey = 'd';
             break;
-        case '8':
-            ylwPlayer.keys.eight = true
-            ylwPlayer.lastKey = 'w';
+        case 'ArrowUp':
+            ylwPlayer.keys.up = true
+            ylwPlayer.lastKey = 'ArrowUp';
             break;
-        case '4': 
-            ylwPlayer.keys.four = true
-            ylwPlayer.lastKey = '4';
+        case 'ArrowLeft': 
+            ylwPlayer.keys.left = true
+            ylwPlayer.lastKey = 'ArrowLeft';
             break;
-        case '5': 
-            ylwPlayer.keys.five = true
-            ylwPlayer.lastKey = '5';
+        case 'ArrowDown': 
+            ylwPlayer.keys.down = true
+            ylwPlayer.lastKey = 'ArrowDown';
             break;
-        case '6': 
-            ylwPlayer.keys.six = true
-            ylwPlayer.lastKey = '6';
+        case 'ArrowRight': 
+            ylwPlayer.keys.right = true
+            ylwPlayer.lastKey = 'ArrowRight';
             break;
     }
 })
@@ -98,17 +98,17 @@ window.addEventListener('keyup', (event) => {
         case 'd': 
             redPlayer.keys.right = false
             break;
-        case '8':
-            ylwKeys.eight = false
+        case 'ArrowUp':
+            ylwPlayer.keys.up = false
             break;
-        case '4': 
-            ylwKeys.four = false
+        case 'ArrowLeft': 
+            ylwPlayer.keys.left = false
             break;
-        case '5': 
-            ylwKeys.five = false
+        case 'ArrowDown': 
+            ylwPlayer.keys.down = false
             break;
-        case '6': 
-            ylwKeys.six = false
+        case 'ArrowRight': 
+            ylwPlayer.keys.right = false
             break;
     }
 })

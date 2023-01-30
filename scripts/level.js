@@ -15,8 +15,8 @@ class Level {
         for (let row = 0; row < map1.length; row++) {
             for(let column = 0; column < map1[row].length; column++) {
                 if (map1[row][column] === 1) {
-                    let x = 30 * column;
-                    let y = 30 * row;
+                    let x = 32 * column;
+                    let y = 32 * row;
                     this.boundaries.push(new Boundary(ctx, x, y));
                 }
             }
@@ -53,9 +53,11 @@ class Level {
 
     update = () => {
         this.ctx.clearRect(0, 0, this.width, this.height)
-        //this.createBoundaries();
         redPlayer.draw();
         ylwPlayer.draw();
+        this.boundaries.forEach((boundary) => {
+            boundary.draw()
+        })
         redPlayer.movement();
         redPlayer.speedX = 0;
         redPlayer.speedY = 0;
@@ -63,15 +65,10 @@ class Level {
         ylwPlayer.speedX = 0;
         ylwPlayer.speedY = 0;
         ylwPlayer.movement();
-        this.boundaries.forEach((boundary) => {
-            boundary.draw()
-        })
-        
-        //console.log("working");
+
     }
 
     startLevel(){
         this.intervalId = setInterval(this.update, 1000/60);
-
     }
 }

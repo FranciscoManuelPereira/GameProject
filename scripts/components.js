@@ -20,7 +20,7 @@ class Player {
         this.keys = {
             up : false,
             left: false,
-            down:false,
+            down: false,
             right: false,
         }
         this.lastKey = ""
@@ -48,10 +48,10 @@ class Player {
 
     movement() {
         //console.log(this)
-        if (this.keys.up && this.lastKey === this.up) this.speedY = -1;
-        else if (this.keys.left && this.lastKey === this.left) this.speedX = -1;
-        else if (this.keys.down && this.lastKey === this.down) this.speedY = 1;
-        else if (this.keys.right && this.lastKey === this.right) this.speedX = 1; 
+        if (this.keys.up && this.lastKey === this.up) this.speedY = -3;
+        else if (this.keys.left && this.lastKey === this.left) this.speedX = -3;
+        else if (this.keys.down && this.lastKey === this.down) this.speedY = 3;
+        else if (this.keys.right && this.lastKey === this.right) this.speedX = 3; 
 
         this.level.boundaries.forEach((boundary) => {
          
