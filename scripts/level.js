@@ -22,36 +22,7 @@ class Level {
             }
         }
         
-        
-/*             if (this.redPlayer.checkCollisionWithWall({player: this.redPlayer, wall: boundary})) {
-                console.log('collision detected')
-                this.redPlayer.speedX = 0;
-                this.redPlayer.speedY = 0;
-            } */
-
-
-
-//-------------------------------------------------------------------------------------------COLLISION DETECTION NOT WORKING PROPERLY
-
-            /* if (this.redPlayer.top() + this.redPlayer.speedY <= boundary.y + boundary.height &&
-            this.redPlayer.bottom() + this.redPlayer.speedY >= boundary.y) return this.redPlayer.yCollision = true
-            if (this.redPlayer.right() + this.redPlayer.speedX >= boundary.x &&
-            this.redPlayer.left() + this.redPlayer.speedX <= boundary.x + boundary.width) return this.redPlayer.xCollision = true */
-
-
-          /*   if (this.redPlayer.top() + this.redPlayer.speedY <= boundary.y + boundary.height && 
-            this.redPlayer.right() + this.redPlayer.speedX >= boundary.x && 
-            this.redPlayer.bottom() + this.redPlayer.speedY >= boundary.y && 
-            this.redPlayer.left() + this.redPlayer.speedX <= boundary.x + boundary.width) {
-                console.log('collision')
-                this.redPlayer.speedX = 0;
-                this.redPlayer.speedY = 0;
-            } */
-        ;
     }
-    
-
-
 
     startLevel(){
         this.intervalId = setInterval(update, 1000/60);
