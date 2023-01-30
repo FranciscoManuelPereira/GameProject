@@ -48,22 +48,65 @@ class Player {
 
     movement() {
         //console.log(this)
-        if (this.keys.up && this.lastKey === this.up) this.speedY = -3;
+        if (this.keys.up && this.lastKey === this.up)  this.speedY = -3;
+
+
+
+        
         else if (this.keys.left && this.lastKey === this.left) this.speedX = -3;
         else if (this.keys.down && this.lastKey === this.down) this.speedY = 3;
         else if (this.keys.right && this.lastKey === this.right) this.speedX = 3; 
 
-        this.level.boundaries.forEach((boundary) => {
+        for (let i = 0; i < this.level.boundaries.length; i++) {
+            const boundary = this.level.boundaries[i];
+            if (this.keys.up && this.lastKey === this.up && this.crashWith(boundary)) {
+                this.speedY = 0;
+                break;
+            } else if (this.keys.left && this.lastKey === this.left && this.crashWith(boundary)) {
+                this.speedX = 0;
+                break;
+            } else if (this.keys.down && this.lastKey === this.down &&this.crashWith(boundary)) {
+                this.speedY = 0;
+                break;
+            } else if (this.keys.right && this.lastKey === this.right && this.crashWith(boundary)) {
+            this.speedX = 0; 
+            break;
+            } 
+        } 
+
+        this.x += this.speedX;
+        this.y += this.speedY;
+    }
+
+        /* for (let i = 0; i < this.level.boundaries.length; i++) {
+            const boundary = this.level.boundaries[i];
+            if (this.crashWith(boundary)) {
+                if (this.keys.up && this.lastKey === this.up) {
+                    this.speedY = 0;
+                    break;
+                } else if (this.keys.left && this.lastKey === this.left) {
+                        this.speedX = 0;
+                        break;
+                    } else if (this.keys.down && this.lastKey === this.down) {
+                        this.speedY = 0;
+                        break;
+                    } else if (this.keys.right && this.lastKey === this.right) {
+                        this.speedX = 0; 
+                        break;
+                    } 
+            } 
+        } */
+
+/*         this.level.boundaries.forEach((boundary) => {
          
             if (this.crashWith(boundary)) {
                 if (this.keys.up && this.lastKey === this.up) this.speedY = 0;
                     else if (this.keys.left && this.lastKey === this.left) this.speedX = 0;
                     else if (this.keys.down && this.lastKey === this.down) this.speedY = 0;
                     else if (this.keys.right && this.lastKey === this.right) this.speedX = 0; 
-                    } 
-    }) 
-    this.x += this.speedX;
-    this.y += this.speedY;
+            } 
+    })  */
+    
 
         /* if (redKeys.w.pressed && lastRedKey === 'w') {
             level1.boundaries.forEach((boundary) => {
@@ -111,7 +154,6 @@ class Player {
         }
         ylwPlayer.x += ylwPlayer.speedX;
         ylwPlayer.y += ylwPlayer.speedY; */
-    }
 
     topLimit(){
         return this.y;
@@ -128,7 +170,6 @@ class Player {
     rightLimit(){
         return this.x + this.width;
     }
-
 }
 
 /* ctx.fillStyle = "red";
@@ -172,4 +213,3 @@ yrh4.src = "../docs/assets/yrh4.png"
 yrh4.addEventListener('load', function(){
     ctx.drawImage(yrh4, 100, 350, 30, 30);
 }) */
-
