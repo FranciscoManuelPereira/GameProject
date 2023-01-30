@@ -31,12 +31,23 @@ class Player {
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
-    /* checkCollisionWithWall({player, wall}) {
-        return (player.top() + player.speedY <= wall.y + wall.height && 
-                player.right() + player.speedX >= wall.x && 
-                player.bottom() + player.speedY >= wall.y && 
-                player.left() + player.speedX <= wall.x + wall.width)
-    } */
+    topLimit(){
+        return this.y;
+    }
+
+    bottomLimit(){
+        return this.y + this.height;
+    }
+
+    leftLimit(){
+        return this.x;
+    }
+
+    rightLimit(){
+        return this.x + this.width;
+    }
+
+    
     crashWith(boundary) {
         return !(
           this.bottomLimit() + this.speedY < boundary.top() ||
@@ -44,32 +55,9 @@ class Player {
           this.rightLimit() + this.speedX < boundary.left() ||
           this.leftLimit() + this.speedX > boundary.right()
         );
-      }
+    }
 
-    movement() {
-        //console.log(this)
-        if (this.keys.up && this.lastKey === this.up) this.speedY = -2;
-        
- /*            for (let i = 0; i < this.level.boundaries.length; i++) {
-                const boundary = this.level.boundaries[i];
-                if (this.crashWith({...this, speedY: -2}, boundary)) {
-                    this.speedY = 0
-                    break
-                } else this.speedY = -2 */
-        else if (this.keys.left && this.lastKey === this.left) this.speedX = -2;
-        else if (this.keys.down && this.lastKey === this.down) this.speedY = 2;
-        else if (this.keys.right && this.lastKey === this.right) this.speedX = 2; 
-
-        this.level.boundaries.forEach((boundary) => {
-         
-            if (this.crashWith(boundary)) {
-                if (this.keys.up && this.lastKey === this.up) this.speedY = 0;
-                    else if (this.keys.left && this.lastKey === this.left) this.speedX = 0;
-                    else if (this.keys.down && this.lastKey === this.down) this.speedY = 0;
-                    else if (this.keys.right && this.lastKey === this.right) this.speedX = 0; 
-            } 
-    }) 
-
+}
 /*         for (let i = 0; i < this.level.boundaries.length; i++) {
             const boundary = this.level.boundaries[i];
             if (this.keys.up && this.lastKey === this.up && this.crashWith(boundary)) {
@@ -87,9 +75,6 @@ class Player {
             } 
         }  */
 
-        this.x += this.speedX;
-        this.y += this.speedY;
-    }
 
         /* for (let i = 0; i < this.level.boundaries.length; i++) {
             const boundary = this.level.boundaries[i];
@@ -160,22 +145,8 @@ class Player {
         ylwPlayer.x += ylwPlayer.speedX;
         ylwPlayer.y += ylwPlayer.speedY; */
 
-    topLimit(){
-        return this.y;
-    }
+    
 
-    bottomLimit(){
-        return this.y + this.height;
-    }
-
-    leftLimit(){
-        return this.x;
-    }
-
-    rightLimit(){
-        return this.x + this.width;
-    }
-}
 
 /* ctx.fillStyle = "red";
 ctx.fillRect(300, 300, 30, 30);

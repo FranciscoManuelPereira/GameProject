@@ -51,28 +51,9 @@ class Level {
     }
     
 
-    update = () => {
-        this.ctx.clearRect(0, 0, this.width, this.height)
-        redPlayer.draw();
-        ylwPlayer.draw();
 
-        redPlayer.movement();
-        ylwPlayer.movement();
-        this.boundaries.forEach((boundary) => {
-            boundary.draw()
-        })
-
-        
-        redPlayer.speedX = 0;
-        redPlayer.speedY = 0;
-
-        ylwPlayer.speedX = 0;
-        ylwPlayer.speedY = 0;
-
-
-    }
 
     startLevel(){
-        this.intervalId = setInterval(this.update, 1000/60);
+        this.intervalId = setInterval(update, 1000/60);
     }
 }
