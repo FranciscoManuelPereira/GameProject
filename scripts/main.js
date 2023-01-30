@@ -28,57 +28,70 @@ function checkCollisionWithWall({ hitbox, wall }) {
         hitbox.x + hitbox.speedX <= wall.x + wall.width)
 }
 
+//--------------------------------------------------------------PLAYER MOVEMENT WITH ALLOWED MOVEMENT PREDICTION
+
+function playerMove(player) {
+    if (player.keys.up && player.lastKey === player.up) {
+        for (let i = 0; i < level1.boundaries.length; i++) {
+            const boundary = level1.boundaries[i];
+            if (checkCollisionWithWall({
+                hitbox: {...player, speedY: -2},
+                wall: boundary
+            })) {
+              player.speedY = 0;
+              break;
+            } else player.speedY = -2
+        } 
+    } else if (player.keys.left && player.lastKey === player.left) {
+        for (let i = 0; i < level1.boundaries.length; i++) {
+            const boundary = level1.boundaries[i];
+            if (checkCollisionWithWall({
+                hitbox: {...player, speedX: -2},
+                wall: boundary
+            })) {
+              player.speedX = 0;
+              break;
+            } else player.speedX = -2
+        } 
+    } else if (player.keys.down && player.lastKey === player.down) {
+        for (let i = 0; i < level1.boundaries.length; i++) {
+            const boundary = level1.boundaries[i];
+            if (checkCollisionWithWall({
+                hitbox: {...player, speedY: 2},
+                wall: boundary
+            })) {
+              player.speedY = 0;
+              break;
+            } else player.speedY = 2
+        } 
+    } else if (player.keys.right && player.lastKey === player.right) {
+        for (let i = 0; i < level1.boundaries.length; i++) {
+            const boundary = level1.boundaries[i];
+            if (checkCollisionWithWall({
+                hitbox: {...player, speedX: 2},
+                wall: boundary
+            })) {
+              player.speedX = 0;
+              break;
+            } else player.speedX = 2
+        } 
+    } 
+}
+
 //--------------------------------------------------------------ANIMATING
 
 function animate() {
     requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    if (redPlayer.keys.up && redPlayer.lastKey === redPlayer.up) {
-        for (let i = 0; i < level1.boundaries.length; i++) {
-            const boundary = level1.boundaries[i];
-            if (checkCollisionWithWall({
-                hitbox: {...redPlayer, speedY: -2},
-                wall: boundary
-            })) {
-              redPlayer.speedY = 0;
-              break;
-            } else redPlayer.speedY = -2
-        } 
-    } else if (redPlayer.keys.left && redPlayer.lastKey === redPlayer.left) {
-        for (let i = 0; i < level1.boundaries.length; i++) {
-            const boundary = level1.boundaries[i];
-            if (checkCollisionWithWall({
-                hitbox: {...redPlayer, speedX: -2},
-                wall: boundary
-            })) {
-              redPlayer.speedX = 0;
-              break;
-            } else redPlayer.speedX = -2
-        } 
-    } else if (redPlayer.keys.down && redPlayer.lastKey === redPlayer.down) {
-        for (let i = 0; i < level1.boundaries.length; i++) {
-            const boundary = level1.boundaries[i];
-            if (checkCollisionWithWall({
-                hitbox: {...redPlayer, speedY: 2},
-                wall: boundary
-            })) {
-              redPlayer.speedY = 0;
-              break;
-            } else redPlayer.speedY = 2
-        } 
-    } else if (redPlayer.keys.right && redPlayer.lastKey === redPlayer.right) {
-        for (let i = 0; i < level1.boundaries.length; i++) {
-            const boundary = level1.boundaries[i];
-            if (checkCollisionWithWall({
-                hitbox: {...redPlayer, speedX: 2},
-                wall: boundary
-            })) {
-              redPlayer.speedX = 0;
-              break;
-            } else redPlayer.speedX = 2
-        } 
-    } 
+//---------MOVING PLAYERS
+
+    playerMove(redPlayer);
+    playerMove(ylwPlayer);
+    redPlayer.update();
+    ylwPlayer.update();
+
+//---------STOPING PLAYERS ON FULL COLLISION
 
     level1.boundaries.forEach((boundary) => {
         boundary.draw()
@@ -91,19 +104,24 @@ function animate() {
             redPlayer.speedX = 0;
             redPlayer.speedY = 0;
         }
+
+        if (
+            checkCollisionWithWall({
+                hitbox: ylwPlayer,
+                wall: boundary
+            })
+        ) {
+            ylwPlayer.speedX = 0;
+            ylwPlayer.speedY = 0;
+        }
     })
-    redPlayer.update();
-    ylwPlayer.update();
+} 
 
-    ylwPlayer.speedX = 0;
-    ylwPlayer.speedY = 0;
+//--------------------------------------------------------------START BUTTON FUNCTION
     
-}
-
 startButton.onclick = function (){
     animate();
 }
-
 
 //--------------------------------------------------------------EVENT LISTENERS
 
