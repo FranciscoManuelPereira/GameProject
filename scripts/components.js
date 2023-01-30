@@ -1,35 +1,105 @@
 /** @type {HTMLCanvasElement} */
 
 class Player {
-    constructor(ctx, x, y, speedX, speedY, color){
+    constructor(ctx, x, y, speedX, speedY, color, up, down, left, right){
         this.ctx = ctx;
         this.x = x;
         this.y = y;
         this.speedX = speedX;
         this.speedY = speedY;
         this.color = color;
-        this.w = 20;
-        this.h = 28;
+        this.width = 20;
+        this.height = 28;
+        this.xCollision = null;
+        this.yCollision = null;
+        this.level = null;
+        this.up = up;
+        this.down = down;
+        this.left = left;
+        this.right = right;
+        this.keys = {
+            up : false,
+            left: false,
+            down: false,
+            right: false,
+        }
+        this.lastKey = ""
     }
 
     draw() {
         this.ctx.fillStyle = this.color;
-        this.ctx.fillRect(this.x, this.y, this.w, this.h);
+        this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
-    movement() {
-        if (redKeys.w.pressed && lastRedKey === 'w') {
-            redPlayer.speedY = -5
-        } else if (redKeys.a.pressed && lastRedKey === 'a') {
-            redPlayer.speedX = -5
-        } else if (redKeys.s.pressed && lastRedKey === 's') {
-            redPlayer.speedY = 5
-        } else if (redKeys.d.pressed && lastRedKey === 'd') {
-            redPlayer.speedX = 5
-        }
-        redPlayer.x += redPlayer.speedX;
-        redPlayer.y += redPlayer.speedY;
+    /* checkCollisionWithWall({player, wall}) {
+        return (player.top() + player.speedY <= wall.y + wall.height && 
+                player.right() + player.speedX >= wall.x && 
+                player.bottom() + player.speedY >= wall.y && 
+                player.left() + player.speedX <= wall.x + wall.width)
+    } */
+    crashWith(boundary) {
+        return !(
+          this.bottomLimit() + this.speedY < boundary.top() ||
+          this.topLimit() + this.speedY > boundary.bottom() ||
+          this.rightLimit() + this.speedX < boundary.left() ||
+          this.leftLimit() + this.speedX > boundary.right()
+        );
+      }
 
+    movement() {
+        //console.log(this)
+        if (this.keys.up && this.lastKey === this.up) this.speedY = -3;
+        else if (this.keys.left && this.lastKey === this.left) this.speedX = -3;
+        else if (this.keys.down && this.lastKey === this.down) this.speedY = 3;
+        else if (this.keys.right && this.lastKey === this.right) this.speedX = 3; 
+
+        this.level.boundaries.forEach((boundary) => {
+         
+            if (this.crashWith(boundary)) {
+                if (this.keys.up && this.lastKey === this.up) this.speedY = 0;
+                    else if (this.keys.left && this.lastKey === this.left) this.speedX = 0;
+                    else if (this.keys.down && this.lastKey === this.down) this.speedY = 0;
+                    else if (this.keys.right && this.lastKey === this.right) this.speedX = 0; 
+                    } 
+    }) 
+    this.x += this.speedX;
+    this.y += this.speedY;
+
+        /* if (redKeys.w.pressed && lastRedKey === 'w') {
+            level1.boundaries.forEach((boundary) => {
+                if (redPlayer.checkCollisionWithWall({player: redPlayer, wall: boundary})) {
+                    /* console.log(`${redPlayer.checkCollisionWithWall()}`) 
+                    console.log(`speedY ${redPlayer.speedY}`)
+                    redPlayer.speedY = 0;
+                    console.log(`speedY ${redPlayer.speedY}`)
+                } else {
+                    redPlayer.speedY = -5
+                }
+            })
+        } else if (redKeys.a.pressed && lastRedKey === 'a') {
+            level1.boundaries.forEach((boundary) => {
+                if (redPlayer.checkCollisionWithWall({player: redPlayer, wall: boundary})) {
+                    console.log('collision detected')
+                    redPlayer.speedX = 0;
+                } else redPlayer.speedX = -5
+            })
+        } else if (redKeys.s.pressed && lastRedKey === 's') {
+            level1.boundaries.forEach((boundary) => {
+                if (redPlayer.checkCollisionWithWall({player: redPlayer, wall: boundary})) {
+                    console.log('collision detected')
+                    redPlayer.speedY = 0;
+                } else redPlayer.speedY = 5
+            })
+        } else if (redKeys.d.pressed && lastRedKey === 'd') {
+            level1.boundaries.forEach((boundary) => {
+                if (redPlayer.checkCollisionWithWall({player: redPlayer, wall: boundary})) {
+                    console.log('collision detected')
+                    redPlayer.speedX = 0;
+                } else redPlayer.speedX = 5
+            })
+        } */
+
+/* 
         if (ylwKeys.eight.pressed && lastYlwKey === '8') {
             ylwPlayer.speedY = -5
         } else if (ylwKeys.four.pressed && lastYlwKey === '4') {
@@ -40,23 +110,23 @@ class Player {
             ylwPlayer.speedX = 5
         }
         ylwPlayer.x += ylwPlayer.speedX;
-        ylwPlayer.y += ylwPlayer.speedY;
+        ylwPlayer.y += ylwPlayer.speedY; */
     }
 
-    top(){
+    topLimit(){
         return this.y;
     }
 
-    bottom(){
-        return this.y + this.h;
+    bottomLimit(){
+        return this.y + this.height;
     }
 
-    left(){
+    leftLimit(){
         return this.x;
     }
 
-    right(){
-        return this.x + this.w;
+    rightLimit(){
+        return this.x + this.width;
     }
 
 }
