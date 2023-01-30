@@ -8,15 +8,18 @@ const startButton = document.getElementById('start-button');
 
 //--------------------------------------------------------------CREATING PLAYERS
 
-const redPlayer = new Player (ctx, 0, 192, 0, 0, 'red')
+const redPlayer = new Player (ctx, 0, 192, 0, 0, 'red', 'w', 's', 'a', 'd')
 redPlayer.draw();
-const ylwPlayer = new Player (ctx, 0, 230, 0, 0, 'yellow')
+const ylwPlayer = new Player (ctx, 0, 230, 0, 0, 'yellow', "eight", "five", "four", "six")
 ylwPlayer.draw();
 
 //--------------------------------------------------------------CREATING LEVEL
 
 const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer);
 level1.createBoundaries();
+
+redPlayer.level = level1
+ylwPlayer.level = level1
 
 
 //--------------------------------------------------------------STARTING THE GAME
@@ -27,7 +30,7 @@ startButton.onclick = function (){
 
 //--------------------------------------------------------------EVENT LISTENERS
 
-const redKeys = {
+/* const redKeys = {
     w: {pressed: false},
     a: {pressed: false},
     s: {pressed: false},
@@ -39,44 +42,44 @@ const ylwKeys = {
     four: {pressed: false},
     five: {pressed: false},
     six: {pressed: false}
-}
+} */
 
-let lastRedKey = '';
-let lastYlwKey ='';
+/* let lastRedKey = '';
+let lastYlwKey =''; */
 
 window.addEventListener('keydown', (event) => {
     switch (event.key) {
         case 'w':
-            redKeys.w.pressed = true
-            lastRedKey = 'w';
+            redPlayer.keys.up = true
+            redPlayer.lastKey = 'w';
             break;
         case 'a': 
-            redKeys.a.pressed = true
-            lastRedKey = 'a';
+            redPlayer.keys.left = true
+            redPlayer.lastKey = 'a';
             break;
         case 's': 
-            redKeys.s.pressed = true
-            lastRedKey = 's';
+            redPlayer.keys.down = true
+            redPlayer.lastKey = 's';
             break;
         case 'd': 
-            redKeys.d.pressed = true
-            lastRedKey = 'd';
+            redPlayer.keys.right = true
+            redPlayer.lastKey = 'd';
             break;
         case '8':
-            ylwKeys.eight.pressed = true
-            lastYlwKey = '8';
+            ylwPlayer.keys.eight = true
+            ylwPlayer.lastKey = 'w';
             break;
         case '4': 
-            ylwKeys.four.pressed = true
-            lastYlwKey = '4';
+            ylwPlayer.keys.four = true
+            ylwPlayer.lastKey = '4';
             break;
         case '5': 
-            ylwKeys.five.pressed = true
-            lastYlwKey = '5';
+            ylwPlayer.keys.five = true
+            ylwPlayer.lastKey = '5';
             break;
         case '6': 
-            ylwKeys.six.pressed = true
-            lastYlwKey = '6';
+            ylwPlayer.keys.six = true
+            ylwPlayer.lastKey = '6';
             break;
     }
 })
@@ -84,28 +87,28 @@ window.addEventListener('keydown', (event) => {
 window.addEventListener('keyup', (event) => {
     switch (event.key) {
         case 'w':
-            redKeys.w.pressed = false
+            redPlayer.keys.w = false
             break;
         case 'a': 
-            redKeys.a.pressed = false
+            redPlayer.keys.a = false    
             break;
         case 's': 
-            redKeys.s.pressed = false
+            redPlayer.keys.s = false     
             break;
         case 'd': 
-            redKeys.d.pressed = false
+            redPlayer.keys.d = false
             break;
         case '8':
-            ylwKeys.eight.pressed = false
+            ylwKeys.eight = false
             break;
         case '4': 
-            ylwKeys.four.pressed = false
+            ylwKeys.four = false
             break;
         case '5': 
-            ylwKeys.five.pressed = false
+            ylwKeys.five = false
             break;
         case '6': 
-            ylwKeys.six.pressed = false
+            ylwKeys.six = false
             break;
     }
 })
