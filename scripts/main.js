@@ -8,20 +8,26 @@ const startButton = document.getElementById('start-button');
 
 //--------------------------------------------------------------CREATING COMPONENTS
 
+/* function createComponents() {} */
+
 ctx.fillStyle = "#b7c8b7";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
-const redPlayer = new Player (ctx, 0, 202, 0, 0, 'red', 'w', 's', 'a', 'd')
+const redPlayer = new Player (ctx, 35, 202, 0, 0, 'red', 'w', 's', 'a', 'd')
 redPlayer.update();
-const ylwPlayer = new Player (ctx, 0, 250, 0, 0, 'yellow', "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight")
+const ylwPlayer = new Player (ctx, 35, 250, 0, 0, 'yellow', "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight")
 ylwPlayer.update();
+
 
 const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer);
 level1.createBoundaries();
+/* level1.boundaries.forEach((boundary) => {
+    boundary.draw()
+}) */
 
 redPlayer.level = level1
 ylwPlayer.level = level1
 
-const grandmaHouse = new Finish(ctx, 1248, 224);
+const grandmaHouse = new Finish(ctx, 1216, 224);
 grandmaHouse.draw();
 
 const redPoison1 = new PowerUp(ctx, 164, 420);
@@ -32,8 +38,6 @@ const redPoison3 = new PowerUp(ctx, 868, 420);
 redPoison3.draw();
 const redPoison4 = new PowerUp(ctx, 868, 36);
 redPoison4.draw();
-console.log(redPoison1);
-console.log(grandmaHouse);
 
 
 
@@ -152,7 +156,9 @@ function playerMove(player) {
 
 //--------------------------------------------------------------ANIMATING
 let animationId
+let framesX = 0;
 function animate() {
+    framesX++;
     animationId = requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = "#b7c8b7";
@@ -197,30 +203,37 @@ function animate() {
 
 //---------POWER UP COLLISION
 
-if (checkCollision({ hitbox: redPlayer, object: redPoison1 })) {
+if (checkCollision({ hitbox: redPlayer, object: redPoison1 }) ||
+    checkCollision({ hitbox: redPlayer, object: redPoison2 }) ||
+    checkCollision({ hitbox: redPlayer, object: redPoison3 }) ||
+    checkCollision({ hitbox: redPlayer, object: redPoison4 })) {
     redPlayer.powerUp = true;
 }
 
-if (checkCollision({ hitbox: ylwPlayer, object: redPoison1 })) {
+if (checkCollision({ hitbox: ylwPlayer, object: redPoison1 }) ||
+    checkCollision({ hitbox: ylwPlayer, object: redPoison2 }) ||
+    checkCollision({ hitbox: ylwPlayer, object: redPoison3 }) ||
+    checkCollision({ hitbox: ylwPlayer, object: redPoison4 })) {
     ylwPlayer.powerUp = true;
 }
 
 //---------PLAYER COLLISION
 
 if (checkCollision({ hitbox: ylwPlayer, object: redPlayer })) {
-    cancelAnimationFrame(animationId);
-    console.log("game over");
+    if (ylwPlayer.powerUp || redPlayer.powerUp) {
+        cancelAnimationFrame(animationId);
+    }
 }
 
 
 //---------GRANDMA'S HOUSE COLLISION
 
-    if (checkCollision({ hitbox: redPlayer, object: grandmaHouse })) {
+    if (checkCollision({ hitbox: redPlayer, object: grandmaHouse }) && !redPlayer.powerUp) {
         console.log('red win');
         cancelAnimationFrame(animationId);
     }
 
-    if (checkCollision({ hitbox: ylwPlayer, object: grandmaHouse })) {
+    if (checkCollision({ hitbox: ylwPlayer, object: grandmaHouse && !ylwPlayer.powerUp})) {
         console.log('yellow win');
         cancelAnimationFrame(animationId);
     }
@@ -228,15 +241,17 @@ if (checkCollision({ hitbox: ylwPlayer, object: redPlayer })) {
 } 
 
 //--------------------------------------------------------------START BUTTON FUNCTION
-    
-startButton.onclick = function (){
-    animate();
-}
 
+startButton.onclick = function (){
+    canvas.classList.remove("hidden");
+    animate();
+    
+}
 //--------------------------------------------------------------EVENT LISTENERS
 
 
 window.addEventListener('keydown', (event) => {
+    if(framesX > 180) {
     switch (event.key) {
         case 'w':
             redPlayer.keys.up = true
@@ -270,7 +285,7 @@ window.addEventListener('keydown', (event) => {
             ylwPlayer.keys.right = true
             ylwPlayer.lastKey = 'ArrowRight';
             break;
-    }
+    }}
 })
 
 window.addEventListener('keyup', (event) => {

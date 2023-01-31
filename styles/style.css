@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap');
+
 html { 
   background: url(../docs/assets/bg-image.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
@@ -9,8 +11,29 @@ html {
 body {
   text-align: center;
 }
+#intro{
+  font-family: 'Amatic SC', cursive;
+  text-align: center;
+}
+h1 {
+  line-height: 50px;
+  font-size: 70px;
+  color: black;
+  text-shadow: 3px 2px 3px yellow,
+   5px 4px 3px red;
+}
 
-.updown_poison {
+h2{
+  line-height: 50px;
+  font-size: 50px;
+}
+p > span{
+
+}
+
+
+
+/* .updown_poison {
   width: 25px;
   height: 20px;
   animation-name: infiniteupdown;
@@ -32,4 +55,113 @@ body {
   100% {
     transform: translateY(0px);
   }
+} */
+
+button {
+  position: relative;
+  text-decoration: none;
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  display: inline-block;
+  font-size: 30px;
+  font-family: 'Amatic SC', cursive;
+  text-transform: uppercase;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  background-color: #FADF46;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 0;
+  height: 0;
+  background: transparent;
+  border: 2px solid transparent;
+}
+
+button:hover{
+  color: #FA4C33;
+}
+
+button:hover::before {
+  animation: animate .3s linear forwards;
+}
+
+@keyframes animate {
+  0% {
+    width: 0;
+    height: 0;
+    border-top-color: #FA4C33;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  50% {
+    width: 100%;
+    height: 0;
+    border-top-color: #FA4C33;
+    border-right-color: #FA4C33;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+    border-top-color: #FA4C33;
+    border-right-color: #FA4C33;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 0;
+  height: 0;
+  background: transparent;
+  border: 2px solid transparent;
+}
+
+button:hover::after {
+  animation: animate2 .3s linear forwards;
+}
+
+@keyframes animate2 {
+  0% {
+    width: 0;
+    height: 0;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: #FA4C33;
+  }
+  50% {
+    width: 0%;
+    height: 100%;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: #FA4C33;
+    border-left-color: #FA4C33;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: #FA4C33;
+    border-left-color: #FA4C33;
+  }
+}
+
+.hidden {
+  visibility: hidden;
 }
