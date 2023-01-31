@@ -12,7 +12,8 @@ body {
   font-family: 'Amatic SC', cursive;
   width: 1300px;
   height: 600px;
-  display: flex;
+  text-align: center;
+  /* display: flex; */
 }
 h1 {
   line-height: 50px;
@@ -27,6 +28,11 @@ h1 {
 }
 
 #intro {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-end;
 
 }
 
