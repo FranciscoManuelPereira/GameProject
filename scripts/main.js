@@ -6,12 +6,20 @@ const startButton = document.getElementById('start-button');
 
 
 
-//--------------------------------------------------------------CREATING PLAYERS
+//--------------------------------------------------------------CREATING COMPONENTS
 
 const redPlayer = new Player (ctx, 0, 202, 0, 0, 'red', 'w', 's', 'a', 'd')
 redPlayer.update();
 const ylwPlayer = new Player (ctx, 0, 250, 0, 0, 'yellow', "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight")
 ylwPlayer.update();
+const redPoison1 = new PowerUp(ctx, 170, 420);
+redPoison1.draw();
+const redPoison2 = new PowerUp(ctx, 100, 100);
+redPoison2.draw();
+const redPoison3 = new PowerUp(ctx, 880, 420);
+redPoison3.draw();
+const redPoison4 = new PowerUp(ctx, 870, 40);
+redPoison4.draw();
 
 const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer);
 level1.createBoundaries();
@@ -94,6 +102,10 @@ function animate() {
     redPlayer.update();
     ylwPlayer.update();
     grandmaHouse.draw();
+    redPoison1.draw();
+    redPoison2.draw();
+    redPoison3.draw();
+    redPoison4.draw();
 
 //---------STOPING PLAYERS ON FULL WALL COLLISION
 

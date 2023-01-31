@@ -67,3 +67,17 @@ class Finish {
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
+
+class PowerUp {
+    constructor(ctx, x, y) {
+      this.ctx = ctx;
+      this.x = x;
+      this.y = y;
+      this.width = 25;
+      this.height = 25;
+    }
+    draw() {
+      ctx.fillStyle = "pink";
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+  }
