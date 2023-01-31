@@ -19,13 +19,16 @@ level1.createBoundaries();
 redPlayer.level = level1
 ylwPlayer.level = level1
 
+const grandmaHouse = new Finish(ctx);
+grandmaHouse.draw();
+
 //--------------------------------------------------------------CHECKING COLLISIONS
 
-function checkCollisionWithWall({ hitbox, wall }) {
-    return (hitbox.y + hitbox.speedY <= wall.y + wall.height && 
-        hitbox.x + hitbox.width + hitbox.speedX >= wall.x && 
-        hitbox.y + hitbox.height + hitbox.speedY >= wall.y && 
-        hitbox.x + hitbox.speedX <= wall.x + wall.width)
+function checkCollision({ hitbox, object }) {
+    return (hitbox.y + hitbox.speedY <= object.y + object.height && 
+        hitbox.x + hitbox.width + hitbox.speedX >= object.x && 
+        hitbox.y + hitbox.height + hitbox.speedY >= object.y && 
+        hitbox.x + hitbox.speedX <= object.x + object.width)
 }
 
 //--------------------------------------------------------------PLAYER MOVEMENT WITH ALLOWED MOVEMENT PREDICTION
@@ -34,9 +37,9 @@ function playerMove(player) {
     if (player.keys.up && player.lastKey === player.up) {
         for (let i = 0; i < level1.boundaries.length; i++) {
             const boundary = level1.boundaries[i];
-            if (checkCollisionWithWall({
+            if (checkCollision({
                 hitbox: {...player, speedY: -2},
-                wall: boundary
+                object: boundary
             })) {
               player.speedY = 0;
               break;
@@ -45,9 +48,9 @@ function playerMove(player) {
     } else if (player.keys.left && player.lastKey === player.left) {
         for (let i = 0; i < level1.boundaries.length; i++) {
             const boundary = level1.boundaries[i];
-            if (checkCollisionWithWall({
+            if (checkCollision({
                 hitbox: {...player, speedX: -2},
-                wall: boundary
+                object: boundary
             })) {
               player.speedX = 0;
               break;
@@ -56,9 +59,9 @@ function playerMove(player) {
     } else if (player.keys.down && player.lastKey === player.down) {
         for (let i = 0; i < level1.boundaries.length; i++) {
             const boundary = level1.boundaries[i];
-            if (checkCollisionWithWall({
+            if (checkCollision({
                 hitbox: {...player, speedY: 2},
-                wall: boundary
+                object: boundary
             })) {
               player.speedY = 0;
               break;
@@ -67,9 +70,9 @@ function playerMove(player) {
     } else if (player.keys.right && player.lastKey === player.right) {
         for (let i = 0; i < level1.boundaries.length; i++) {
             const boundary = level1.boundaries[i];
-            if (checkCollisionWithWall({
+            if (checkCollision({
                 hitbox: {...player, speedX: 2},
-                wall: boundary
+                object: boundary
             })) {
               player.speedX = 0;
               break;
@@ -79,9 +82,9 @@ function playerMove(player) {
 }
 
 //--------------------------------------------------------------ANIMATING
-
+let animationId
 function animate() {
-    requestAnimationFrame(animate)
+    animationId = requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
 //---------MOVING PLAYERS
@@ -90,15 +93,16 @@ function animate() {
     playerMove(ylwPlayer);
     redPlayer.update();
     ylwPlayer.update();
+    grandmaHouse.draw();
 
-//---------STOPING PLAYERS ON FULL COLLISION
+//---------STOPING PLAYERS ON FULL WALL COLLISION
 
     level1.boundaries.forEach((boundary) => {
         boundary.draw()
         if (
-            checkCollisionWithWall({
+            checkCollision({
                 hitbox: redPlayer,
-                wall: boundary
+                object: boundary
             })
         ) {
             redPlayer.speedX = 0;
@@ -106,15 +110,28 @@ function animate() {
         }
 
         if (
-            checkCollisionWithWall({
+            checkCollision({
                 hitbox: ylwPlayer,
-                wall: boundary
+                object: boundary
             })
         ) {
             ylwPlayer.speedX = 0;
             ylwPlayer.speedY = 0;
         }
     })
+
+//---------GRANDMA'S HOUSE COLLISION
+
+    if (checkCollision({ hitbox: redPlayer, object: grandmaHouse })) {
+        console.log('red win');
+        cancelAnimationFrame(animationId);
+    }
+
+    if (checkCollision({ hitbox: ylwPlayer, object: grandmaHouse })) {
+        console.log('yellow win');
+        cancelAnimationFrame(animationId);
+    }
+
 } 
 
 //--------------------------------------------------------------START BUTTON FUNCTION

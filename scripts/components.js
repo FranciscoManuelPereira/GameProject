@@ -52,3 +52,18 @@ class Player {
     }
  */
 }
+
+class Finish {
+    constructor(ctx) {
+        this.ctx = ctx;
+        this.x = 1248;
+        this.y = 224;
+        this.width = 32;
+        this.height = 32;
+    }
+
+    draw() {
+        this.ctx.fillStyle = 'brown';
+        this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+}
