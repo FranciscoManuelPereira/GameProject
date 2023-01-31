@@ -8,8 +8,6 @@ const startButton = document.getElementById('start-button');
 
 //--------------------------------------------------------------CREATING COMPONENTS
 
-/* function createComponents() {} */
-
 ctx.fillStyle = "#b7c8b7";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 const redPlayer = new Player (ctx, 35, 202, 0, 0, 'red', 'w', 's', 'a', 'd')
@@ -20,15 +18,14 @@ ylwPlayer.update();
 
 const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer);
 level1.createBoundaries();
-/* level1.boundaries.forEach((boundary) => {
-    boundary.draw()
-}) */
 
 redPlayer.level = level1
 ylwPlayer.level = level1
 
 const grandmaHouse = new Finish(ctx, 1216, 224);
 grandmaHouse.draw();
+
+let powerUpsArr = [];
 
 const redPoison1 = new PowerUp(ctx, 164, 420);
 redPoison1.draw();
@@ -38,8 +35,30 @@ const redPoison3 = new PowerUp(ctx, 868, 420);
 redPoison3.draw();
 const redPoison4 = new PowerUp(ctx, 868, 36);
 redPoison4.draw();
+powerUpsArr.push(redPoison1, redPoison2, redPoison3, redPoison4);
 
 
+//--------------------------------------------------------------TIMER FUNCTION
+
+function countdown() {
+    if (framesX >= 0 && framesX < 60) {
+        const img = new Image()
+        img.src = "../docs/assets/3.png";
+        ctx.drawImage(img, (canvas.width/2 - 175), (canvas.height/2 - 175))
+    } else if (framesX >= 60 && framesX < 120) {
+        const img = new Image()
+        img.src = "../docs/assets/2.png";
+        ctx.drawImage(img, (canvas.width/2 - 175), (canvas.height/2 - 175))
+    } else if (framesX >= 120 && framesX < 180) {
+        const img = new Image()
+        img.src = "../docs/assets/1.png";
+        ctx.drawImage(img, (canvas.width/2 - 175), (canvas.height/2 - 175))
+    } else if (framesX >= 180 && framesX < 240) {
+        const img = new Image()
+        img.src = "../docs/assets/go.png";
+        ctx.drawImage(img, (canvas.width/2 - 175), (canvas.height/2 - 175))
+    }
+}
 
 
 //--------------------------------------------------------------CHECKING COLLISIONS
@@ -158,11 +177,12 @@ function playerMove(player) {
 let animationId
 let framesX = 0;
 function animate() {
-    framesX++;
     animationId = requestAnimationFrame(animate)
+    framesX++;
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = "#b7c8b7";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    console.log(countdown);
 
 //---------MOVING PLAYERS
 
@@ -171,10 +191,9 @@ function animate() {
     redPlayer.update();
     ylwPlayer.update();
     grandmaHouse.draw();
-    redPoison1.draw();
-    redPoison2.draw();
-    redPoison3.draw();
-    redPoison4.draw();
+    powerUpsArr.forEach((element) => {
+        element.draw();
+    })
 
 //---------STOPING PLAYERS ON FULL WALL COLLISION
 
@@ -200,6 +219,7 @@ function animate() {
             ylwPlayer.speedY = 0;
         }
     })
+    countdown();
 
 //---------POWER UP COLLISION
 
@@ -208,6 +228,7 @@ if (checkCollision({ hitbox: redPlayer, object: redPoison1 }) ||
     checkCollision({ hitbox: redPlayer, object: redPoison3 }) ||
     checkCollision({ hitbox: redPlayer, object: redPoison4 })) {
     redPlayer.powerUp = true;
+    powerUpsArr = [];
 }
 
 if (checkCollision({ hitbox: ylwPlayer, object: redPoison1 }) ||
@@ -245,7 +266,8 @@ if (checkCollision({ hitbox: ylwPlayer, object: redPlayer })) {
 startButton.onclick = function (){
     canvas.classList.remove("hidden");
     animate();
-    
+    let start = document.getElementById('start-button');
+    start.remove();
 }
 //--------------------------------------------------------------EVENT LISTENERS
 

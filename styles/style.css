@@ -9,26 +9,38 @@ html {
 }
 
 body {
-  text-align: center;
-}
-#intro{
   font-family: 'Amatic SC', cursive;
-  text-align: center;
+  width: 1300px;
+  height: 600px;
+  display: flex;
 }
 h1 {
   line-height: 50px;
   font-size: 70px;
   color: black;
-  text-shadow: 3px 2px 3px yellow,
+  text-shadow: 3px 2px 3px rgb(255, 255, 0),
    5px 4px 3px red;
+   position: relative;
+   top: 40px;
+   left: 10px;
+   margin: 0;
 }
+
+#intro {
+
+}
+
 
 h2{
   line-height: 50px;
-  font-size: 50px;
-}
-p > span{
+  font-size: 35px;
 
+}
+#red {
+  color: #FA4C33;
+}
+#yellow {
+  color:#FADF46;
 }
 
 
