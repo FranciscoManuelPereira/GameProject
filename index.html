@@ -1,31 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/style.css" />
     <title>AwesomeProject1</title>
-</head>
-<body>
-
-    <h1>Welcome To</h1>
-    <h2>MAZE HOOD</h2>
-
-    <div id="power-up">
-      <img src="docs/assets/poison_wolf.png" alt="" class="updown_poison">
+  </head>
+  <body class=".bg">
+    <h1>RidingHood.innerWOLF</h1>
+    <div id="intro">
+      <h2>Rules</h2>
+      <p>Welcome, this is a multiplayer maze game!</p>
+      <p>
+        You can choose from a <span id="red">red riding hood</span> or a
+        <span id="yellow">yellow riding hood</span>
+      </p>
+      <p>The END GAME is</p>
     </div>
 
     <button id="start-button">Start</button>
-      <p>Use the left and right arrow to control the car!</p>
-      <img src="" alt="" class="arrows-img" />
-    </div>
-    
-    <canvas id="canvas" width="1280px" height="480px" style="border: 10px solid black"></canvas>
+
+    <!-- <div id="power-up">
+      <img src="docs/assets/poison_wolf.png" alt="" class="updown_poison">
+    </div> -->
+
+    <canvas
+      id="canvas"
+      class="hidden"
+      width="1280px"
+      height="480px"
+      style="border: 10px solid black"
+    ></canvas>
 
     <script src="./scripts/level.js"></script>
     <script src="./scripts/maps.js"></script>
     <script src="./scripts/components.js"></script>
     <script src="./scripts/main.js"></script>
-</body>
+  </body>
 </html>
