@@ -8,9 +8,9 @@ const startButton = document.getElementById('start-button');
 
 //--------------------------------------------------------------CREATING PLAYERS
 
-const redPlayer = new Player (ctx, 0, 192, 0, 0, 'red', 'w', 's', 'a', 'd')
+const redPlayer = new Player (ctx, 0, 202, 0, 0, 'red', 'w', 's', 'a', 'd')
 redPlayer.update();
-const ylwPlayer = new Player (ctx, 0, 230, 0, 0, 'yellow', "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight")
+const ylwPlayer = new Player (ctx, 0, 250, 0, 0, 'yellow', "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight")
 ylwPlayer.update();
 
 const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer);
