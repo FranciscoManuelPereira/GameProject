@@ -22,19 +22,39 @@ class Player {
             right: false,
         }
         this.lastKey = ""
+        this.powerUp = false;
+        this.powerUpTimer = 0;
+        this.powerUpLimit = 1000;
     }
 
     draw() {
-        this.ctx.fillStyle = this.color;
-        this.ctx.fillRect(this.x, this.y, this.width, this.height);
+        if (this.powerUp) {
+            this.ctx.fillStyle = "black";
+            this.ctx.fillRect(this.x, this.y, this.width, this.height);  
+        } else {
+            this.ctx.fillStyle = this.color;
+            this.ctx.fillRect(this.x, this.y, this.width, this.height);
+        } 
+        
     }
 
     update () {
         this.draw()
         this.x += this.speedX
         this.y += this.speedY
+        if(this.powerUp) {
+            if(this.powerUpTimer > this.powerUpLimit) {
+                this.powerUpTimer = 0
+                this.powerUp = false;
+                /* this.frameY = 0; */ //sprite image
+            } else {
+                this.powerUpTimer ++;
+            }
+        }
     }
+}
 
+        //animation
   /*   topLimit(){
         return this.y;
     }
@@ -51,13 +71,13 @@ class Player {
         return this.x + this.width;
     }
  */
-}
+
 
 class Finish {
-    constructor(ctx) {
+    constructor(ctx, x, y) {
         this.ctx = ctx;
-        this.x = 1248;
-        this.y = 224;
+        this.x = x;
+        this.y = y;
         this.width = 32;
         this.height = 32;
     }
@@ -76,8 +96,9 @@ class PowerUp {
       this.width = 25;
       this.height = 25;
     }
+
     draw() {
       ctx.fillStyle = "pink";
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }
-  }
+}

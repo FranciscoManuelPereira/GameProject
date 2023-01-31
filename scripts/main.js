@@ -8,18 +8,12 @@ const startButton = document.getElementById('start-button');
 
 //--------------------------------------------------------------CREATING COMPONENTS
 
+ctx.fillStyle = "#b7c8b7";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 const redPlayer = new Player (ctx, 0, 202, 0, 0, 'red', 'w', 's', 'a', 'd')
 redPlayer.update();
 const ylwPlayer = new Player (ctx, 0, 250, 0, 0, 'yellow', "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight")
 ylwPlayer.update();
-const redPoison1 = new PowerUp(ctx, 170, 420);
-redPoison1.draw();
-const redPoison2 = new PowerUp(ctx, 100, 100);
-redPoison2.draw();
-const redPoison3 = new PowerUp(ctx, 880, 420);
-redPoison3.draw();
-const redPoison4 = new PowerUp(ctx, 870, 40);
-redPoison4.draw();
 
 const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer);
 level1.createBoundaries();
@@ -27,8 +21,22 @@ level1.createBoundaries();
 redPlayer.level = level1
 ylwPlayer.level = level1
 
-const grandmaHouse = new Finish(ctx);
+const grandmaHouse = new Finish(ctx, 1248, 224);
 grandmaHouse.draw();
+
+const redPoison1 = new PowerUp(ctx, 164, 420);
+redPoison1.draw();
+const redPoison2 = new PowerUp(ctx, 100, 100);
+redPoison2.draw();
+const redPoison3 = new PowerUp(ctx, 868, 420);
+redPoison3.draw();
+const redPoison4 = new PowerUp(ctx, 868, 36);
+redPoison4.draw();
+console.log(redPoison1);
+console.log(grandmaHouse);
+
+
+
 
 //--------------------------------------------------------------CHECKING COLLISIONS
 
@@ -42,51 +50,104 @@ function checkCollision({ hitbox, object }) {
 //--------------------------------------------------------------PLAYER MOVEMENT WITH ALLOWED MOVEMENT PREDICTION
 
 function playerMove(player) {
-    if (player.keys.up && player.lastKey === player.up) {
-        for (let i = 0; i < level1.boundaries.length; i++) {
-            const boundary = level1.boundaries[i];
-            if (checkCollision({
-                hitbox: {...player, speedY: -2},
-                object: boundary
-            })) {
-              player.speedY = 0;
-              break;
-            } else player.speedY = -2
+    if (!player.powerUp) {
+        if (player.keys.up && player.lastKey === player.up) {
+            for (let i = 0; i < level1.boundaries.length; i++) {
+                const boundary = level1.boundaries[i];
+                if (checkCollision({
+                    hitbox: {...player, speedY: -2},
+                    object: boundary
+                })) {
+                  player.speedY = 0;
+                  break;
+                } else player.speedY = -2
+            } 
+        } else if (player.keys.left && player.lastKey === player.left) {
+            for (let i = 0; i < level1.boundaries.length; i++) {
+                const boundary = level1.boundaries[i];
+                if (checkCollision({
+                    hitbox: {...player, speedX: -2},
+                    object: boundary
+                })) {
+                  player.speedX = 0;
+                  break;
+                } else player.speedX = -2
+            } 
+        } else if (player.keys.down && player.lastKey === player.down) {
+            for (let i = 0; i < level1.boundaries.length; i++) {
+                const boundary = level1.boundaries[i];
+                if (checkCollision({
+                    hitbox: {...player, speedY: 2},
+                    object: boundary
+                })) {
+                  player.speedY = 0;
+                  break;
+                } else player.speedY = 2
+            } 
+        } else if (player.keys.right && player.lastKey === player.right) {
+            for (let i = 0; i < level1.boundaries.length; i++) {
+                const boundary = level1.boundaries[i];
+                if (checkCollision({
+                    hitbox: {...player, speedX: 2},
+                    object: boundary
+                })) {
+                  player.speedX = 0;
+                  break;
+                } else player.speedX = 2
+            } 
         } 
-    } else if (player.keys.left && player.lastKey === player.left) {
-        for (let i = 0; i < level1.boundaries.length; i++) {
-            const boundary = level1.boundaries[i];
-            if (checkCollision({
-                hitbox: {...player, speedX: -2},
-                object: boundary
-            })) {
-              player.speedX = 0;
-              break;
-            } else player.speedX = -2
-        } 
-    } else if (player.keys.down && player.lastKey === player.down) {
-        for (let i = 0; i < level1.boundaries.length; i++) {
-            const boundary = level1.boundaries[i];
-            if (checkCollision({
-                hitbox: {...player, speedY: 2},
-                object: boundary
-            })) {
-              player.speedY = 0;
-              break;
-            } else player.speedY = 2
-        } 
-    } else if (player.keys.right && player.lastKey === player.right) {
-        for (let i = 0; i < level1.boundaries.length; i++) {
-            const boundary = level1.boundaries[i];
-            if (checkCollision({
-                hitbox: {...player, speedX: 2},
-                object: boundary
-            })) {
-              player.speedX = 0;
-              break;
-            } else player.speedX = 2
-        } 
-    } 
+    } else {
+        if (player.keys.up && player.lastKey === player.up) {
+            for (let i = 0; i < level1.boundaries.length; i++) {
+                const boundary = level1.boundaries[i];
+                if (checkCollision({
+                    hitbox: {...player, speedY: -3},
+                    object: boundary
+                })) {
+                  player.speedY = 0;
+                  break;
+                } else player.speedY = -3
+            } 
+        } else if (player.keys.left && player.lastKey === player.left) {
+            for (let i = 0; i < level1.boundaries.length; i++) {
+                const boundary = level1.boundaries[i];
+                if (checkCollision({
+                    hitbox: {...player, speedX: -3},
+                    object: boundary
+                })) {
+                  player.speedX = 0;
+                  break;
+                } else player.speedX = -3
+            } 
+        } else if (player.keys.down && player.lastKey === player.down) {
+            for (let i = 0; i < level1.boundaries.length; i++) {
+                const boundary = level1.boundaries[i];
+                if (checkCollision({
+                    hitbox: {...player, speedY: 3},
+                    object: boundary
+                })) {
+                  player.speedY = 0;
+                  break;
+                } else player.speedY = 3
+            } 
+        } else if (player.keys.right && player.lastKey === player.right) {
+            for (let i = 0; i < level1.boundaries.length; i++) {
+                const boundary = level1.boundaries[i];
+                if (checkCollision({
+                    hitbox: {...player, speedX: 3},
+                    object: boundary
+                })) {
+                  player.speedX = 0;
+                  break;
+                } else player.speedX = 3
+            } 
+        }
+    }
+
+
+
+
+    
 }
 
 //--------------------------------------------------------------ANIMATING
@@ -94,6 +155,8 @@ let animationId
 function animate() {
     animationId = requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.fillStyle = "#b7c8b7";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 //---------MOVING PLAYERS
 
@@ -131,6 +194,24 @@ function animate() {
             ylwPlayer.speedY = 0;
         }
     })
+
+//---------POWER UP COLLISION
+
+if (checkCollision({ hitbox: redPlayer, object: redPoison1 })) {
+    redPlayer.powerUp = true;
+}
+
+if (checkCollision({ hitbox: ylwPlayer, object: redPoison1 })) {
+    ylwPlayer.powerUp = true;
+}
+
+//---------PLAYER COLLISION
+
+if (checkCollision({ hitbox: ylwPlayer, object: redPlayer })) {
+    cancelAnimationFrame(animationId);
+    console.log("game over");
+}
+
 
 //---------GRANDMA'S HOUSE COLLISION
 

@@ -1,17 +1,19 @@
 /** @type {HTMLCanvasElement} */
 
 class Boundary {
-    constructor(ctx, x, y) {
+    constructor(ctx, x, y, image) {
         this.ctx = ctx;
         this.x = x;
         this.y = y;
         this.width = 32;
         this.height = 32;
+        this.image = image
     }
 
     draw() {
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.ctx.drawImage(this.image, this.x, this.y)
+/*         ctx.fillStyle = 'blue';
+        ctx.fillRect(this.x, this.y, this.width, this.height); */
     }
     top(){
         return this.y;
