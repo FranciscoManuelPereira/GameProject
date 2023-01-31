@@ -1,7 +1,7 @@
 /** @type {HTMLCanvasElement} */
 
 class Player {
-  constructor(ctx, x, y, speedX, speedY, color, up, down, left, right) {
+  constructor(ctx, x, y, speedX, speedY, color, up, down, left, right, sprite) {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
@@ -25,6 +25,10 @@ class Player {
     this.powerUp = false;
     this.powerUpTimer = 0;
     this.powerUpLimit = 1000;
+    this.frameX = 0;
+    this.frameY = 0;
+    this.animSpeed = 9;
+    this.sprite = sprite
   }
 
   draw() {
@@ -32,10 +36,16 @@ class Player {
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(this.x, this.y, this.width, this.height);
     } else {
+/*       this.drawSprite(this.sprite, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height)
+      console.log(this.sprite) */
       this.ctx.fillStyle = this.color;
       this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
   }
+
+/*   drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
+    this.ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
+  } */
 
   update() {
     this.draw();

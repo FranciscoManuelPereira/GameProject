@@ -8,20 +8,13 @@ const startButton = document.getElementById("start-button");
 
 ctx.fillStyle = "#b7c8b7";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
-const redPlayer = new Player(ctx, 35, 202, 0, 0, "red", "w", "s", "a", "d");
+
+const redSprite = new Image()
+redSprite.src = "../docs/assets/red_sprite.png"
+const redPlayer = new Player(ctx, 35, 202, 0, 0, "red", "w", "s", "a", "d", redSprite);
 redPlayer.update();
-const ylwPlayer = new Player(
-  ctx,
-  35,
-  250,
-  0,
-  0,
-  "yellow",
-  "ArrowUp",
-  "ArrowDown",
-  "ArrowLeft",
-  "ArrowRight"
-);
+
+const ylwPlayer = new Player(ctx, 35, 250, 0, 0, "yellow", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight");
 ylwPlayer.update();
 
 const level1 = new Level(
@@ -207,7 +200,6 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "#b7c8b7";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  console.log(countdown);
 
   //---------MOVING PLAYERS
 
@@ -272,27 +264,34 @@ function animate() {
   if (checkCollision({ hitbox: ylwPlayer, object: redPlayer })) {
     if (ylwPlayer.powerUp || redPlayer.powerUp) {
       cancelAnimationFrame(animationId);
+      if (ylwPlayer.powerUp) {
+        const ylwWins = new Image();
+        ylwWins.src = "../docs/assets/ylw_wolf_wins.png";
+        ylwWins.onload = () => ctx.drawImage(ylwWins, 0, 0);
+      } else if (redPlayer.powerUp) {
+        const redWins = new Image();
+        redWins.src = "../docs/assets/red_wolf_wins.png";
+        redWins.onload = () => ctx.drawImage(redWins, 0, 0);
+      }
     }
   }
 
   //---------GRANDMA'S HOUSE COLLISION
 
   if (
-    checkCollision({ hitbox: redPlayer, object: grandmaHouse }) &&
-    !redPlayer.powerUp
-  ) {
-    console.log("red win");
+    checkCollision({ hitbox: redPlayer, object: grandmaHouse }) && !redPlayer.powerUp) {
     cancelAnimationFrame(animationId);
+    const redWins = new Image();
+    redWins.src = "../docs/assets/red_wins.png";
+    redWins.onload = () => ctx.drawImage(redWins, 0, 0);
   }
 
   if (
-    checkCollision({
-      hitbox: ylwPlayer,
-      object: grandmaHouse && !ylwPlayer.powerUp,
-    })
-  ) {
-    console.log("yellow win");
+    checkCollision({ hitbox: ylwPlayer, object: grandmaHouse }) && !ylwPlayer.powerUp ) {
     cancelAnimationFrame(animationId);
+    const ylwWins = new Image();
+    ylwWins.src = "../docs/assets/ylw_wins.png";
+    ylwWins.onload = () => ctx.drawImage(ylwWins, 0, 0);
   }
 }
 
