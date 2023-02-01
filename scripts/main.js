@@ -287,7 +287,7 @@ function animate() {
   if (checkCollision({ hitbox: ylwPlayer, object: redPlayer })) {
     if (ylwPlayer.powerUp && redPlayer.powerUp) {
       cancelAnimationFrame(animationId);
-      music.pause();
+      forestMusic.pause();
       cityMusic.pause();
       const drawScreen = new Image();
       drawScreen.src = "./docs/assets/draw_screen.png";
@@ -295,7 +295,7 @@ function animate() {
     }
     if (ylwPlayer.powerUp || redPlayer.powerUp) {
       cancelAnimationFrame(animationId);
-      music.pause();
+      forestMusic.pause();
       cityMusic.pause();
       if (ylwPlayer.powerUp && !redPlayer.powerUp) {
         const ylwWins = new Image();
@@ -314,7 +314,7 @@ function animate() {
   if (
     checkCollision({ hitbox: redPlayer, object: grandmaHouse }) && !redPlayer.powerUp) {
     cancelAnimationFrame(animationId);
-    music.pause();
+    forestMusic.pause();
     cityMusic.pause();
     const redWins = new Image();
     redWins.src = "./docs/assets/red_wins.png";
@@ -324,7 +324,7 @@ function animate() {
   if (
     checkCollision({ hitbox: ylwPlayer, object: grandmaHouse }) && !ylwPlayer.powerUp ) {
     cancelAnimationFrame(animationId);
-    music.pause();
+    forestMusic.pause();
     cityMusic.pause();
     const ylwWins = new Image();
     ylwWins.src = "./docs/assets/ylw_wins.png";
@@ -337,7 +337,8 @@ function animate() {
 forestButton.onclick = function () {
   currentLevel = level1
   currentLevel.createBoundaries();
-  music.play()
+  forestMusic.play();
+  cityMusic.pause();
   canvas.classList.remove("hidden");
   animate();
 }
@@ -345,6 +346,7 @@ cityButton.onclick = function () {
   currentLevel = level2
   currentLevel.createBoundaries();
   cityMusic.play()
+  forestMusic.pause()
   canvas.classList.remove("hidden");
   animate();
 }
