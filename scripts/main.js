@@ -3,7 +3,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const startButton = document.getElementById("start-button");
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
+const audioCtx = new Audio ("../Audio/MainSoundGame.mp3") //Audio
 
 //--------------------------------------------------------------CREATING COMPONENTS
 
@@ -34,17 +34,9 @@ const ylwPlayer = new Player(ctx, 35, 250, 0, 0, "yellow", "ArrowUp", "ArrowDown
 ylwPlayer.update();
 
 //----------------------------------LEVELS
-const level1 = new Level(
-  ctx,
-  canvas.width,
-  canvas.height,
-  redPlayer,
-  ylwPlayer
-);
+const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map1);
 level1.createBoundaries();
 
-redPlayer.level = level1;
-ylwPlayer.level = level1;
 
 //----------------------------------GRANDMA'S HOUSE
 
@@ -289,12 +281,15 @@ function animate() {
   if (checkCollision({ hitbox: ylwPlayer, object: redPlayer })) {
     if (ylwPlayer.powerUp && redPlayer.powerUp) {
       cancelAnimationFrame(animationId);
+      audioCtx.pause();
       const drawScreen = new Image();
       drawScreen.src = "../docs/assets/draw_screen.png";
       drawScreen.onload = () => ctx.drawImage(drawScreen, 0, 0);
+      
     }
     if (ylwPlayer.powerUp || redPlayer.powerUp) {
       cancelAnimationFrame(animationId);
+      audioCtx.pause();
       if (ylwPlayer.powerUp && !redPlayer.powerUp) {
         const ylwWins = new Image();
         ylwWins.src = "../docs/assets/ylw_wolf_wins.png";
@@ -312,6 +307,7 @@ function animate() {
   if (
     checkCollision({ hitbox: redPlayer, object: grandmaHouse }) && !redPlayer.powerUp) {
     cancelAnimationFrame(animationId);
+    audioCtx.pause();
     const redWins = new Image();
     redWins.src = "../docs/assets/red_wins.png";
     redWins.onload = () => ctx.drawImage(redWins, 0, 0);
@@ -320,6 +316,7 @@ function animate() {
   if (
     checkCollision({ hitbox: ylwPlayer, object: grandmaHouse }) && !ylwPlayer.powerUp ) {
     cancelAnimationFrame(animationId);
+    audioCtx.pause();
     const ylwWins = new Image();
     ylwWins.src = "../docs/assets/ylw_wins.png";
     ylwWins.onload = () => ctx.drawImage(ylwWins, 0, 0);
@@ -329,17 +326,20 @@ function animate() {
 //--------------------------------------------------------------START BUTTON FUNCTION
 
 startButton.onclick = function () {
+  audioCtx.currententTime = 0;
+  audioCtx.play()
   canvas.classList.remove("hidden");
   animate();
   let start = document.getElementById("start-button");
   start.remove();
-  let audioStart = document.getElementById("start-button");
+}
+ /*  let audioStart = document.getElementById("start-button");
   audioStart.addEventListener('click', playSound);
 }; 
 
 const playSound = () => {
   audioStart.play();
-};
+}; */
 
 //--------------------------------------------------------------EVENT LISTENERS
 
