@@ -15,6 +15,10 @@ class Level {
     image1.src = "../docs/assets/fruit_tree.png";
     const image2 = new Image();
     image2.src = "../docs/assets/rock.png";
+    const image3 = new Image();
+    image3.src = "../docs/assets/well.png";
+    const image4 = new Image();
+    image4.src = "../docs/assets/wheat.png";
     for (let row = 0; row < map1.length; row++) {
       for (let column = 0; column < map1[row].length; column++) {
         if (map1[row][column] === 1) {
@@ -25,7 +29,16 @@ class Level {
           let x = 32 * column;
           let y = 32 * row;
           this.boundaries.push(new Boundary(ctx, x, y, image2));
+        } else if (map1[row][column] === 3) {
+          let x = 32 * column;
+          let y = 32 * row;
+          this.boundaries.push(new Boundary(ctx, x, y, image3));
+        } else if (map1[row][column] === 4) {
+          let x = 32 * column;
+          let y = 32 * row;
+          this.boundaries.push(new Boundary(ctx, x, y, image4));
         }
+        
       }
     }
   }

@@ -3,6 +3,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const startButton = document.getElementById("start-button");
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
 
 //--------------------------------------------------------------CREATING COMPONENTS
 
@@ -267,28 +268,20 @@ function animate() {
 
   if (
     checkCollision({ hitbox: redPlayer, object: redPoison1 }) ||
-    checkCollision({ hitbox: redPlayer, object: redPoison2 }) ||
-    checkCollision({ hitbox: redPlayer, object: redPoison3 }) ||
-    checkCollision({ hitbox: redPlayer, object: redPoison4 })
+    checkCollision({ hitbox: redPlayer, object: redPoison2 })
   ) {
     redPlayer.powerUp = true;
     redPoison1.isOn = false;
     redPoison2.isOn = false;
-    redPoison3.isOn = false;
-    redPoison4.isOn = false;
   }
 
   if (
     checkCollision({ hitbox: ylwPlayer, object: redPoison1 }) ||
-    checkCollision({ hitbox: ylwPlayer, object: redPoison2 }) ||
-    checkCollision({ hitbox: ylwPlayer, object: redPoison3 }) ||
-    checkCollision({ hitbox: ylwPlayer, object: redPoison4 })
+    checkCollision({ hitbox: ylwPlayer, object: redPoison2 })
   ) {
     ylwPlayer.powerUp = true;
     redPoison1.isOn = false;
     redPoison2.isOn = false;
-    redPoison3.isOn = false;
-    redPoison4.isOn = false;
   }
 
   //---------PLAYER COLLISION
@@ -340,7 +333,14 @@ startButton.onclick = function () {
   animate();
   let start = document.getElementById("start-button");
   start.remove();
+  let audioStart = document.getElementById("start-button");
+  audioStart.addEventListener('click', playSound);
+}; 
+
+const playSound = () => {
+  audioStart.play();
 };
+
 //--------------------------------------------------------------EVENT LISTENERS
 
 window.addEventListener("keydown", (event) => {
