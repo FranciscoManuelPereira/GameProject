@@ -10,29 +10,34 @@ html {
 
 body {
   font-family: "Amatic SC", cursive;
-  width: 1300px;
-  height: 600px;
   text-align: center;
-  /* display: flex; */
-  /*overflow: hidden;*/
+  /*  display: flex; */
+  overflow: hidden;
+}
+
+nav {
+  margin: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 h1 {
   line-height: 50px;
   font-size: 70px;
   color: black;
   text-shadow: 3px 2px 3px rgb(255, 255, 0), 5px 4px 3px red;
-  position: relative;
-  top: 40px;
-  left: 10px;
-  margin: 0;
 }
 
-#intro {
+#rules {
+  width: 600px;
+  height: 600px;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-content: flex-end;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  box-shadow: 20px 20px 20px 15px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 251, 236, 0.5);
 }
 
 h2 {
@@ -46,29 +51,13 @@ h2 {
   color: #fadf46;
 }
 
-/* .updown_poison {
-  width: 25px;
-  height: 20px;
-  animation-name: infiniteupdown;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease;
-  transition: all.3s;
+#maps {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
 }
-
-@keyframes infiniteupdown {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
-} */
 
 button {
   position: relative;
@@ -82,6 +71,7 @@ button {
   font-family: "Amatic SC", cursive;
   text-transform: uppercase;
   color: white;
+  margin: 20px;
   border: 0;
   border-radius: 4px;
   background-color: #fadf46;
