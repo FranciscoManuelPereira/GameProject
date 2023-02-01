@@ -1,7 +1,7 @@
 /** @type {HTMLCanvasElement} */
 
 class Level {
-  constructor(ctx, width, height, redPlayer, ylwPlayer, map, name) {
+  constructor(ctx, width, height, redPlayer, ylwPlayer, map, name, color) {
     this.ctx = ctx;
     this.width = width;
     this.height = height;
@@ -10,6 +10,7 @@ class Level {
     this.boundaries = [];
     this.map = map;
     this.name = name;
+    this.color = color;
   }
 
   createBoundaries() {

@@ -36,8 +36,8 @@ const ylwPlayer = new Player(ctx, 35, 250, 0, 0, "yellow", "ArrowUp", "ArrowDown
 ylwPlayer.update();
 
 //----------------------------------LEVELS
-const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map1, "forest");
-const level2 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map2, "city");
+const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map1, "forest", "#75b565");
+const level2 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map2, "city", "#bdbdbd");
 
 let currentLevel = "";
 
@@ -222,7 +222,7 @@ function animate() {
   animationId = requestAnimationFrame(animate);
   framesX++;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#b7c8b7";
+  ctx.fillStyle = currentLevel.color;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   //---------MOVING PLAYERS
@@ -288,6 +288,7 @@ function animate() {
     if (ylwPlayer.powerUp && redPlayer.powerUp) {
       cancelAnimationFrame(animationId);
       music.pause();
+      cityMusic.pause();
       const drawScreen = new Image();
       drawScreen.src = "./docs/assets/draw_screen.png";
       drawScreen.onload = () => ctx.drawImage(drawScreen, 0, 0);
@@ -295,6 +296,7 @@ function animate() {
     if (ylwPlayer.powerUp || redPlayer.powerUp) {
       cancelAnimationFrame(animationId);
       music.pause();
+      cityMusic.pause();
       if (ylwPlayer.powerUp && !redPlayer.powerUp) {
         const ylwWins = new Image();
         ylwWins.src = "./docs/assets/ylw_wolf_wins.png";
@@ -313,6 +315,7 @@ function animate() {
     checkCollision({ hitbox: redPlayer, object: grandmaHouse }) && !redPlayer.powerUp) {
     cancelAnimationFrame(animationId);
     music.pause();
+    cityMusic.pause();
     const redWins = new Image();
     redWins.src = "./docs/assets/red_wins.png";
     redWins.onload = () => ctx.drawImage(redWins, 0, 0);
@@ -322,6 +325,7 @@ function animate() {
     checkCollision({ hitbox: ylwPlayer, object: grandmaHouse }) && !ylwPlayer.powerUp ) {
     cancelAnimationFrame(animationId);
     music.pause();
+    cityMusic.pause();
     const ylwWins = new Image();
     ylwWins.src = "./docs/assets/ylw_wins.png";
     ylwWins.onload = () => ctx.drawImage(ylwWins, 0, 0);
@@ -340,7 +344,7 @@ forestButton.onclick = function () {
 cityButton.onclick = function () {
   currentLevel = level2
   currentLevel.createBoundaries();
-  music.play()
+  cityMusic.play()
   canvas.classList.remove("hidden");
   animate();
 }
