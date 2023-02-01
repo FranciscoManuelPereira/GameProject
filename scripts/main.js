@@ -9,14 +9,30 @@ const startButton = document.getElementById("start-button");
 ctx.fillStyle = "#b7c8b7";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+//----------------------------------PLAYERS
 const redSprite = new Image()
+redSprite.addEventListener("load", ()=> {})
 redSprite.src = "../docs/assets/red_sprite.png"
-const redPlayer = new Player(ctx, 35, 202, 0, 0, "red", "w", "s", "a", "d", redSprite);
+
+const redWolfSprite = new Image()
+redWolfSprite.addEventListener("load", ()=> {})
+redWolfSprite.src = "../docs/assets/red_wolf_sprite.png"
+
+const ylwSprite = new Image()
+ylwSprite.addEventListener("load", ()=> {})
+ylwSprite.src = "../docs/assets/ylw_sprite.png"
+
+const ylwWolfSprite = new Image()
+ylwWolfSprite.addEventListener("load", ()=> {})
+ylwWolfSprite.src = "../docs/assets/ylw_wolf_sprite.png"
+
+const redPlayer = new Player(ctx, 35, 202, 0, 0, "red", "w", "s", "a", "d", redSprite, redWolfSprite);
 redPlayer.update();
 
-const ylwPlayer = new Player(ctx, 35, 250, 0, 0, "yellow", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight");
+const ylwPlayer = new Player(ctx, 35, 250, 0, 0, "yellow", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",ylwSprite, ylwWolfSprite);
 ylwPlayer.update();
 
+//----------------------------------LEVELS
 const level1 = new Level(
   ctx,
   canvas.width,
@@ -29,20 +45,29 @@ level1.createBoundaries();
 redPlayer.level = level1;
 ylwPlayer.level = level1;
 
-const grandmaHouse = new Finish(ctx, 1216, 224);
+//----------------------------------GRANDMA'S HOUSE
+
+const grandmaImg = new Image()
+grandmaImg.addEventListener("load", ()=> {})
+grandmaImg.src = "../docs/assets/grandma_house.png"
+
+const grandmaHouse = new Finish(ctx, 1216, 224, grandmaImg);
 grandmaHouse.draw();
+
+//----------------------------------POWER UPS
+
+const poisonImg = new Image()
+poisonImg.addEventListener("load", ()=> {})
+poisonImg.src = "../docs/assets/poison.png"
 
 let powerUpsArr = [];
 
-const redPoison1 = new PowerUp(ctx, 164, 420);
+const redPoison1 = new PowerUp(ctx, 736, 163, poisonImg);
 redPoison1.draw();
-const redPoison2 = new PowerUp(ctx, 100, 100);
+const redPoison2 = new PowerUp(ctx, 868, 420, poisonImg);
 redPoison2.draw();
-const redPoison3 = new PowerUp(ctx, 868, 420);
-redPoison3.draw();
-const redPoison4 = new PowerUp(ctx, 868, 36);
-redPoison4.draw();
-powerUpsArr.push(redPoison1, redPoison2, redPoison3, redPoison4);
+
+powerUpsArr.push(redPoison1, redPoison2);
 
 //--------------------------------------------------------------TIMER FUNCTION
 
@@ -247,7 +272,10 @@ function animate() {
     checkCollision({ hitbox: redPlayer, object: redPoison4 })
   ) {
     redPlayer.powerUp = true;
-    powerUpsArr = [];
+    redPoison1.isOn = false;
+    redPoison2.isOn = false;
+    redPoison3.isOn = false;
+    redPoison4.isOn = false;
   }
 
   if (
@@ -257,18 +285,28 @@ function animate() {
     checkCollision({ hitbox: ylwPlayer, object: redPoison4 })
   ) {
     ylwPlayer.powerUp = true;
+    redPoison1.isOn = false;
+    redPoison2.isOn = false;
+    redPoison3.isOn = false;
+    redPoison4.isOn = false;
   }
 
   //---------PLAYER COLLISION
 
   if (checkCollision({ hitbox: ylwPlayer, object: redPlayer })) {
+    if (ylwPlayer.powerUp && redPlayer.powerUp) {
+      cancelAnimationFrame(animationId);
+      const drawScreen = new Image();
+      drawScreen.src = "../docs/assets/draw_screen.png";
+      drawScreen.onload = () => ctx.drawImage(drawScreen, 0, 0);
+    }
     if (ylwPlayer.powerUp || redPlayer.powerUp) {
       cancelAnimationFrame(animationId);
-      if (ylwPlayer.powerUp) {
+      if (ylwPlayer.powerUp && !redPlayer.powerUp) {
         const ylwWins = new Image();
         ylwWins.src = "../docs/assets/ylw_wolf_wins.png";
         ylwWins.onload = () => ctx.drawImage(ylwWins, 0, 0);
-      } else if (redPlayer.powerUp) {
+      } else if (redPlayer.powerUp && !ylwPlayer.powerUp) {
         const redWins = new Image();
         redWins.src = "../docs/assets/red_wolf_wins.png";
         redWins.onload = () => ctx.drawImage(redWins, 0, 0);

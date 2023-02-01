@@ -1,7 +1,7 @@
 /** @type {HTMLCanvasElement} */
 
 class Player {
-  constructor(ctx, x, y, speedX, speedY, color, up, down, left, right, sprite) {
+  constructor(ctx, x, y, speedX, speedY, color, up, down, left, right, sprite, wolfSprite) {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
@@ -24,28 +24,29 @@ class Player {
     this.lastKey = "";
     this.powerUp = false;
     this.powerUpTimer = 0;
-    this.powerUpLimit = 1000;
+    this.powerUpLimit = 420;
     this.frameX = 0;
     this.frameY = 0;
     this.animSpeed = 9;
     this.sprite = sprite
+    this.wolfSprite = wolfSprite;
   }
 
   draw() {
     if (this.powerUp) {
-      this.ctx.fillStyle = "black";
-      this.ctx.fillRect(this.x, this.y, this.width, this.height);
+      this.drawSprite(this.wolfSprite, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height)
     } else {
-/*       this.drawSprite(this.sprite, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height)
-      console.log(this.sprite) */
-      this.ctx.fillStyle = this.color;
-      this.ctx.fillRect(this.x, this.y, this.width, this.height);
+/*       const playerImg = new Image()
+      playerImg.src = this.sprite  */
+      this.drawSprite(this.sprite, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height)
+/*       this.ctx.fillStyle = this.color;
+      this.ctx.fillRect(this.x, this.y, this.width, this.height); */
     }
   }
 
-/*   drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
+  drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
     this.ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
-  } */
+  }
 
   update() {
     this.draw();
@@ -82,31 +83,37 @@ class Player {
  */
 
 class Finish {
-  constructor(ctx, x, y) {
+  constructor(ctx, x, y, img) {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
     this.width = 32;
     this.height = 32;
+    this.img = img;
   }
 
   draw() {
-    this.ctx.fillStyle = "brown";
-    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.ctx.drawImage(this.img, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height)
   }
 }
 
+
+
 class PowerUp {
-  constructor(ctx, x, y) {
+  constructor(ctx, x, y, img) {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
     this.width = 25;
     this.height = 25;
+    this.img = img
+    this.isOn = true;
   }
 
+
   draw() {
-    ctx.fillStyle = "pink";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    if (this.isOn) {
+      this.ctx.drawImage(this.img, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height)
+    }
   }
 }
