@@ -5,6 +5,7 @@ const ctx = canvas.getContext("2d");
 const forestButton = document.getElementById("forest-button");
 const cityButton = document.getElementById("city-button");
 const mountainButton = document.getElementById("mountain-button");
+const newGameButton = document.getElementById("new-game-button");
 
 
 //--------------------------------------------------------------CREATING COMPONENTS
@@ -339,7 +340,11 @@ forestButton.onclick = function () {
   currentLevel.createBoundaries();
   forestMusic.play();
   cityMusic.pause();
-  canvas.classList.remove("hidden");
+  canvas.classList.toggle("hidden");
+  cityButton.classList.toggle("hidden");
+  forestButton.classList.toggle("hidden");
+  mountainButton.classList.toggle("hidden");
+  newGameButton.classList.toggle("hidden");
   animate();
 }
 cityButton.onclick = function () {
@@ -347,8 +352,22 @@ cityButton.onclick = function () {
   currentLevel.createBoundaries();
   cityMusic.play()
   forestMusic.pause()
-  canvas.classList.remove("hidden");
+  canvas.classList.toggle("hidden");
+  cityButton.classList.toggle("hidden");
+  forestButton.classList.toggle("hidden");
+  mountainButton.classList.toggle("hidden");
+  newGameButton.classList.toggle("hidden");
   animate();
+}
+
+newGameButton.onclick = function () {
+  canvas.classList.toggle("hidden");
+  cityButton.classList.toggle("hidden");
+  forestButton.classList.toggle("hidden");
+  mountainButton.classList.toggle("hidden");
+  newGameButton.classList.toggle("hidden");
+  forestMusic.pause()
+  cityMusic.pause();
 }
 
 
