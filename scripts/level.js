@@ -11,9 +11,15 @@ class Level {
     this.map = map;
     this.name = name;
     this.color = color;
+    this.powerUpsArr = [];
   }
 
   createBoundaries() {
+    this.redPlayer.x = 35;
+    this.redPlayer.y = 202;
+    this.ylwPlayer.x = 35;
+    this.ylwPlayer.y = 250;
+
     const image1 = new Image();
     image1.src = "./docs/assets/forest.png";
     const image2 = new Image();
@@ -32,6 +38,8 @@ class Level {
     image8.src = "./docs/assets/house4.png";
     const image9 = new Image();
     image9.src = "./docs/assets/house5.png";
+    const image10 = new Image();
+    image10.src = "./docs/assets/snow_rock.png";
     for (let row = 0; row < this.map.length; row++) {
       for (let column = 0; column < this.map[row].length; column++) {
         if (this.map[row][column] === 1) {
@@ -70,11 +78,17 @@ class Level {
           let x = 32 * column;
           let y = 32 * row;
           this.boundaries.push(new Boundary(ctx, x, y, image9));
-        }
+        } else if (this.map[row][column] === 10) {
+          let x = 32 * column;
+          let y = 32 * row;
+          this.boundaries.push(new Boundary(ctx, x, y, image10));
+        } 
         
       }
     }
   }
+
+  
 
   /* startLevel(){
         function animate() {

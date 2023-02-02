@@ -10,6 +10,10 @@
   <body class=".bg">
     <audio id="forestMusic" src="docs\assets\MainForestSound.mp3"></audio>
     <audio id="cityMusic" src="docs\assets\MainCitySound.mp3"></audio>
+    <audio id="mountainMusic" src="docs\assets\MainMountainSound.mp3"></audio>
+    <audio id="startGameMusic" src="docs/assets/selectMap.mp3"></audio>
+    <audio id="winMusic" src="docs/assets/Win!.mp3"></audio>
+    <audio id="powerUpMusic" src="docs/assets/PowerUp.mp3"></audio>
     <nav>
       <h1>ridingHood.innerWOLF</h1>
       <div id="maps">
@@ -19,14 +23,25 @@
         <button id="new-game-button" class="hidden">New Game</button>
       </div>
     </nav>
-
     <canvas
       id="canvas"
       class="hidden"
       width="1280px"
       height="480px"
-      style="border: 10px solid black"
+      style="border: 5px solid #00000064"
     ></canvas>
+
+    <div id="containerScore">
+      <p id="score">Score</p>
+      <span id="RedScore">0</span>
+      <span id="YellowScore">0</span>
+    </div>
+
+    <div id="bottom">
+      <div id="controls">Controls</div>
+    </div>
+
+    
 
     <div id="rules">
       <h2>Rules</h2>

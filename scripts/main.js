@@ -6,6 +6,10 @@ const forestButton = document.getElementById("forest-button");
 const cityButton = document.getElementById("city-button");
 const mountainButton = document.getElementById("mountain-button");
 const newGameButton = document.getElementById("new-game-button");
+const ylwScore = document.getElementById("YellowScore");
+const redScore = document.getElementById("RedScore");
+let ylwCount = 0;
+let redCount = 0;
 
 
 //--------------------------------------------------------------CREATING COMPONENTS
@@ -39,9 +43,9 @@ ylwPlayer.update();
 //----------------------------------LEVELS
 const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map1, "forest", "#75b565");
 const level2 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map2, "city", "#bdbdbd");
-const level3 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map3, "mountain", "#bdbdbd");
+const level3 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map3, "mountain", "#5e5e5c");
 
-let currentLevel = "";
+let currentLevel = [];
 
 
 
@@ -60,15 +64,8 @@ grandmaHouse.draw();
 const poisonImg = new Image()
 poisonImg.addEventListener("load", ()=> {})
 poisonImg.src = "./docs/assets/poison.png"
-
-let powerUpsArr = [];
-
-const redPoison1 = new PowerUp(ctx, 736, 163, poisonImg);
-redPoison1.draw();
-const redPoison2 = new PowerUp(ctx, 868, 420, poisonImg);
-redPoison2.draw();
-
-powerUpsArr.push(redPoison1, redPoison2);
+let redPoison1 = null;
+let redPoison2 = null;
 
 //--------------------------------------------------------------TIMER FUNCTION
 
@@ -231,10 +228,19 @@ function animate() {
 
   playerMove(redPlayer);
   playerMove(ylwPlayer);
+  if (framesX % 10 === 0) {
+    redPlayer.frameX = (redPlayer.frameX + 20) % 160;
+  }
+  if (framesX % 10 === 0) {
+    ylwPlayer.frameX = (ylwPlayer.frameX + 20) % 160;
+  }
   redPlayer.update();
   ylwPlayer.update();
+
+//---------DRAWING ELEMENTS
+
   grandmaHouse.draw();
-  powerUpsArr.forEach((element) => {
+  currentLevel.powerUpsArr.forEach((element) => {
     element.draw();
   });
 
@@ -267,47 +273,65 @@ function animate() {
   //---------POWER UP COLLISION
 
   if (
-    checkCollision({ hitbox: redPlayer, object: redPoison1 }) ||
-    checkCollision({ hitbox: redPlayer, object: redPoison2 })
+    checkCollision({ hitbox: redPlayer, object: currentLevel.powerUpsArr[0] }) ||
+    checkCollision({ hitbox: redPlayer, object: currentLevel.powerUpsArr[1] })
   ) {
+    powerUpMusic.play();
     redPlayer.powerUp = true;
-    redPoison1.isOn = false;
-    redPoison2.isOn = false;
+    currentLevel.powerUpsArr[0].isOn = false;
+    currentLevel.powerUpsArr[1].isOn = false;
   }
 
   if (
-    checkCollision({ hitbox: ylwPlayer, object: redPoison1 }) ||
-    checkCollision({ hitbox: ylwPlayer, object: redPoison2 })
+    checkCollision({ hitbox: ylwPlayer, object: currentLevel.powerUpsArr[0] }) ||
+    checkCollision({ hitbox: ylwPlayer, object: currentLevel.powerUpsArr[1] })
   ) {
+    powerUpMusic.play();
     ylwPlayer.powerUp = true;
-    redPoison1.isOn = false;
-    redPoison2.isOn = false;
+    currentLevel.powerUpsArr[0].isOn = false;
+    currentLevel.powerUpsArr[1].isOn = false;
   }
 
   //---------PLAYER COLLISION
 
   if (checkCollision({ hitbox: ylwPlayer, object: redPlayer })) {
     if (ylwPlayer.powerUp && redPlayer.powerUp) {
+
       cancelAnimationFrame(animationId);
+      winMusic.play();
       forestMusic.pause();
       cityMusic.pause();
+      
       const drawScreen = new Image();
       drawScreen.src = "./docs/assets/draw_screen.png";
       drawScreen.onload = () => ctx.drawImage(drawScreen, 0, 0);
+      redPlayer.reset();
+      ylwPlayer.reset();
     }
     if (ylwPlayer.powerUp || redPlayer.powerUp) {
+      
       cancelAnimationFrame(animationId);
+      winMusic.play();
       forestMusic.pause();
       cityMusic.pause();
+      powerUpMusic.pause();
+
       if (ylwPlayer.powerUp && !redPlayer.powerUp) {
         const ylwWins = new Image();
         ylwWins.src = "./docs/assets/ylw_wolf_wins.png";
         ylwWins.onload = () => ctx.drawImage(ylwWins, 0, 0);
+        ylwCount ++;
+        ylwScore.innerHTML = `${ylwCount}`;
+
       } else if (redPlayer.powerUp && !ylwPlayer.powerUp) {
         const redWins = new Image();
         redWins.src = "./docs/assets/red_wolf_wins.png";
         redWins.onload = () => ctx.drawImage(redWins, 0, 0);
+        redCount ++;
+        redScore.innerHTML = `${redCount}`;
       }
+      redPlayer.reset();
+      ylwPlayer.reset();
     }
   }
 
@@ -315,22 +339,36 @@ function animate() {
 
   if (
     checkCollision({ hitbox: redPlayer, object: grandmaHouse }) && !redPlayer.powerUp) {
-    cancelAnimationFrame(animationId);
-    forestMusic.pause();
-    cityMusic.pause();
-    const redWins = new Image();
-    redWins.src = "./docs/assets/red_wins.png";
-    redWins.onload = () => ctx.drawImage(redWins, 0, 0);
+      
+      cancelAnimationFrame(animationId);
+      winMusic.play();
+      forestMusic.pause();
+      cityMusic.pause();
+      powerUpMusic.pause();
+      const redWins = new Image();
+      redWins.src = "./docs/assets/red_wins.png";
+      redWins.onload = () => ctx.drawImage(redWins, 0, 0);
+      redCount ++;
+      redScore.innerHTML = `${redCount}`;
+      redPlayer.reset();
+      ylwPlayer.reset();
   }
 
   if (
     checkCollision({ hitbox: ylwPlayer, object: grandmaHouse }) && !ylwPlayer.powerUp ) {
-    cancelAnimationFrame(animationId);
-    forestMusic.pause();
-    cityMusic.pause();
-    const ylwWins = new Image();
-    ylwWins.src = "./docs/assets/ylw_wins.png";
-    ylwWins.onload = () => ctx.drawImage(ylwWins, 0, 0);
+      
+      cancelAnimationFrame(animationId);
+      winMusic.play();
+      forestMusic.pause();
+      cityMusic.pause();
+      powerUpMusic.pause();
+      const ylwWins = new Image();
+      ylwWins.src = "./docs/assets/ylw_wins.png";
+      ylwWins.onload = () => ctx.drawImage(ylwWins, 0, 0);
+      ylwCount ++;
+      ylwScore.innerHTML = `${ylwCount}`;
+      redPlayer.reset();
+      ylwPlayer.reset();
   }
 }
 
@@ -338,9 +376,16 @@ function animate() {
 
 forestButton.onclick = function () {
   currentLevel = level1
+  redPoison1 = new PowerUp(ctx, 736, 163, poisonImg);
+  redPoison1.draw();
+  redPoison2 = new PowerUp(ctx, 868, 420, poisonImg);
+  redPoison2.draw();
+  currentLevel.powerUpsArr.push(redPoison1, redPoison2);
   currentLevel.createBoundaries();
+  setTimeout(() => {
+    startGameMusic.play()
+  }, 3000);
   forestMusic.play();
-  cityMusic.pause();
   canvas.classList.toggle("hidden");
   cityButton.classList.toggle("hidden");
   forestButton.classList.toggle("hidden");
@@ -348,11 +393,40 @@ forestButton.onclick = function () {
   newGameButton.classList.toggle("hidden");
   animate();
 }
+
+
 cityButton.onclick = function () {
   currentLevel = level2
+  redPoison1 = new PowerUp(ctx, 513, 234, poisonImg);
+  redPoison1.draw();
+  redPoison2 = new PowerUp(ctx, 962, 234, poisonImg);
+  redPoison2.draw();
+  currentLevel.powerUpsArr.push(redPoison1, redPoison2);
   currentLevel.createBoundaries();
-  cityMusic.play()
-  forestMusic.pause()
+  setTimeout(() => {
+    startGameMusic.play()
+  }, 3000);
+  cityMusic.play();
+  canvas.classList.toggle("hidden");
+  cityButton.classList.toggle("hidden");
+  forestButton.classList.toggle("hidden");
+  mountainButton.classList.toggle("hidden");
+  newGameButton.classList.toggle("hidden");
+  animate();
+}
+
+mountainButton.onclick = function () {
+  currentLevel = level3
+  redPoison1 = new PowerUp(ctx, 32, 32, poisonImg);
+  redPoison1.draw();
+  redPoison2 = new PowerUp(ctx, 32, 420, poisonImg);
+  redPoison2.draw();
+  currentLevel.powerUpsArr.push(redPoison1, redPoison2);
+  currentLevel.createBoundaries();
+  setTimeout(() => {
+    startGameMusic.play()
+  }, 3000);
+  mountainMusic.play();
   canvas.classList.toggle("hidden");
   cityButton.classList.toggle("hidden");
   forestButton.classList.toggle("hidden");
@@ -369,6 +443,9 @@ newGameButton.onclick = function () {
   newGameButton.classList.toggle("hidden");
   forestMusic.pause()
   cityMusic.pause();
+  mountainMusic.pause();
+  currentLevel = [];
+  cancelAnimationFrame(animationId);
 }
 
 

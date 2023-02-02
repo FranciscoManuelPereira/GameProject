@@ -21,6 +21,36 @@ nav {
   justify-content: space-around;
   align-items: center;
 }
+
+
+#containerScore{
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 3rem;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.407);
+  margin-right: 50px;
+}
+#score{
+  color: rgb(255, 255, 255);
+  text-shadow: 3px 2px 3px rgb(0, 0, 0);
+}
+#RedScore{
+color:#fa4c33;
+text-shadow: 3px 2px 3px rgb(0, 0, 0);
+margin-left: 16px;
+  margin-right: 16px;
+}
+#YellowScore{
+color: #fadf46;
+text-shadow: 3px 2px 3px rgb(0, 0, 0);
+margin-left: 16px;
+  margin-right: 16px;
+}
 h1 {
   line-height: 50px;
   font-size: 70px;

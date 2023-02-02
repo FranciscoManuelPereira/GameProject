@@ -27,20 +27,29 @@ class Player {
     this.powerUpLimit = 420;
     this.frameX = 0;
     this.frameY = 0;
-    this.animSpeed = 9;
     this.sprite = sprite
     this.wolfSprite = wolfSprite;
   }
 
+  reset() {
+    this.powerUp = false;
+    this.lastKey ="";
+    this.powerUpTimer = 0;
+    this.speedX = 0;
+    this.speedY = 0;
+  }
+
   draw() {
     if (this.powerUp) {
-      this.drawSprite(this.wolfSprite, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height)
+      if (this.lastKey === "a" || this.lastKey === "ArrowLeft" || this.lastKey === "s" || this.lastKey === "ArrowDown" || this.lastKey === "w" || this.lastKey === "ArrowUp") this.frameY = 28
+      else if (this.lastKey === "d" || this.lastKey === "ArrowRight") this.frameY = 0
+      this.drawSprite(this.wolfSprite, this.frameX, this.frameY, this.width, this.height, this.x, this.y, this.width, this.height)
     } else {
-/*       const playerImg = new Image()
-      playerImg.src = this.sprite  */
-      this.drawSprite(this.sprite, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height)
-/*       this.ctx.fillStyle = this.color;
-      this.ctx.fillRect(this.x, this.y, this.width, this.height); */
+      if (this.lastKey === "" || this.lastKey === "") this.frameY = 0
+      else if (this.lastKey === "a" || this.lastKey === "ArrowLeft") this.frameY = 28
+      else if (this.lastKey === "d" || this.lastKey === "ArrowRight") this.frameY = 56
+      this.drawSprite(this.sprite, this.frameX, this.frameY, this.width, this.height, this.x, this.y, this.width, this.height)
+
     }
   }
 
@@ -117,4 +126,5 @@ class PowerUp {
     }
   }
 }
+
 
