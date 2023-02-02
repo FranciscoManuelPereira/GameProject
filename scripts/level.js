@@ -40,6 +40,18 @@ class Level {
     image9.src = "./docs/assets/house5.png";
     const image10 = new Image();
     image10.src = "./docs/assets/snow_rock.png";
+    const image11 = new Image();
+    image11.src = "./docs/assets/river_top.png";
+    const image12 = new Image();
+    image12.src = "./docs/assets/river_vert.png";
+    const image13 = new Image();
+    image13.src = "./docs/assets/river_bot.png";
+    const image14 = new Image();
+    image14.src = "./docs/assets/river_left.png";
+    const image15 = new Image();
+    image15.src = "./docs/assets/river_horiz.png";
+    const image16 = new Image();
+    image16.src = "./docs/assets/river_right.png";
     for (let row = 0; row < this.map.length; row++) {
       for (let column = 0; column < this.map[row].length; column++) {
         if (this.map[row][column] === 1) {
@@ -82,6 +94,30 @@ class Level {
           let x = 32 * column;
           let y = 32 * row;
           this.boundaries.push(new Boundary(ctx, x, y, image10));
+        } else if (this.map[row][column] === 11) {
+          let x = 32 * column;
+          let y = 32 * row;
+          this.boundaries.push(new Boundary(ctx, x, y, image11));
+        } else if (this.map[row][column] === 12) {
+          let x = 32 * column;
+          let y = 32 * row;
+          this.boundaries.push(new Boundary(ctx, x, y, image12));
+        } else if (this.map[row][column] === 13) {
+          let x = 32 * column;
+          let y = 32 * row;
+          this.boundaries.push(new Boundary(ctx, x, y, image13));
+        } else if (this.map[row][column] === 14) {
+          let x = 32 * column;
+          let y = 32 * row;
+          this.boundaries.push(new Boundary(ctx, x, y, image14));
+        } else if (this.map[row][column] === 15) {
+          let x = 32 * column;
+          let y = 32 * row;
+          this.boundaries.push(new Boundary(ctx, x, y, image15));
+        } else if (this.map[row][column] === 16) {
+          let x = 32 * column;
+          let y = 32 * row;
+          this.boundaries.push(new Boundary(ctx, x, y, image16));
         } 
         
       }

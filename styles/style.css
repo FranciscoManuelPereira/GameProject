@@ -111,6 +111,7 @@ h1 {
 #score{
   color: rgb(255, 255, 255);
   text-shadow: 3px 2px 3px rgb(0, 0, 0);
+  margin: 10px;
 }
 #RedScore{
 color:#fa4c33;
@@ -158,6 +159,16 @@ button {
   border: 0;
   border-radius: 4px;
   background-color: #fadf46;
+}
+
+#forest-button {
+  background-color: #20873b;
+}
+#city-button {
+  background-color: #ababab;
+}
+#mountain-button {
+  background-color: #2d2d2d;
 }
 
 button::before {
