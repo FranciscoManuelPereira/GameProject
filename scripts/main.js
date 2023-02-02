@@ -8,6 +8,7 @@ const mountainButton = document.getElementById("mountain-button");
 const newGameButton = document.getElementById("new-game-button");
 const ylwScore = document.getElementById("YellowScore");
 const redScore = document.getElementById("RedScore");
+const rules = document.getElementById("rules");
 let ylwCount = 0;
 let redCount = 0;
 
@@ -391,6 +392,8 @@ forestButton.onclick = function () {
   forestButton.classList.toggle("hidden");
   mountainButton.classList.toggle("hidden");
   newGameButton.classList.toggle("hidden");
+  rules.classList.toggle("hidden");
+  framesX = 0;
   animate();
 }
 
@@ -412,6 +415,8 @@ cityButton.onclick = function () {
   forestButton.classList.toggle("hidden");
   mountainButton.classList.toggle("hidden");
   newGameButton.classList.toggle("hidden");
+  rules.classList.toggle("hidden");
+  framesX = 0;
   animate();
 }
 
@@ -432,6 +437,8 @@ mountainButton.onclick = function () {
   forestButton.classList.toggle("hidden");
   mountainButton.classList.toggle("hidden");
   newGameButton.classList.toggle("hidden");
+  rules.classList.toggle("hidden");
+  framesX = 0;
   animate();
 }
 
@@ -441,11 +448,14 @@ newGameButton.onclick = function () {
   forestButton.classList.toggle("hidden");
   mountainButton.classList.toggle("hidden");
   newGameButton.classList.toggle("hidden");
+  rules.classList.toggle("hidden");
   forestMusic.pause()
   cityMusic.pause();
   mountainMusic.pause();
   currentLevel = [];
+  framesX = 0;
   cancelAnimationFrame(animationId);
+
 }
 
 
