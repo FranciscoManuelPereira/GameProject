@@ -305,7 +305,7 @@ function animate() {
       
       const drawScreen = new Image();
       drawScreen.src = "./docs/assets/draw_screen.png";
-      drawScreen.onload = () => ctx.drawImage(drawScreen, 0, 0);
+      drawScreen.onload = () => ctx.drawImage(drawScreen, 340, 115);
       redPlayer.reset();
       ylwPlayer.reset();
     }
@@ -320,14 +320,14 @@ function animate() {
       if (ylwPlayer.powerUp && !redPlayer.powerUp) {
         const ylwWins = new Image();
         ylwWins.src = "./docs/assets/ylw_wolf_wins.png";
-        ylwWins.onload = () => ctx.drawImage(ylwWins, 0, 0);
+        ylwWins.onload = () => ctx.drawImage(ylwWins, 340, 115);
         ylwCount ++;
         ylwScore.innerHTML = `${ylwCount}`;
 
       } else if (redPlayer.powerUp && !ylwPlayer.powerUp) {
         const redWins = new Image();
         redWins.src = "./docs/assets/red_wolf_wins.png";
-        redWins.onload = () => ctx.drawImage(redWins, 0, 0);
+        redWins.onload = () => ctx.drawImage(redWins, 340, 115);
         redCount ++;
         redScore.innerHTML = `${redCount}`;
       }
@@ -348,7 +348,7 @@ function animate() {
       powerUpMusic.pause();
       const redWins = new Image();
       redWins.src = "./docs/assets/red_wins.png";
-      redWins.onload = () => ctx.drawImage(redWins, 0, 0);
+      redWins.onload = () => ctx.drawImage(redWins, 340, 115);
       redCount ++;
       redScore.innerHTML = `${redCount}`;
       redPlayer.reset();
@@ -365,7 +365,7 @@ function animate() {
       powerUpMusic.pause();
       const ylwWins = new Image();
       ylwWins.src = "./docs/assets/ylw_wins.png";
-      ylwWins.onload = () => ctx.drawImage(ylwWins, 0, 0);
+      ylwWins.onload = () => ctx.drawImage(ylwWins, 340, 115);
       ylwCount ++;
       ylwScore.innerHTML = `${ylwCount}`;
       redPlayer.reset();
