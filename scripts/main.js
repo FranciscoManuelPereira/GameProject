@@ -315,7 +315,6 @@ function animate() {
       winMusic.play();
       forestMusic.pause();
       cityMusic.pause();
-      powerUpMusic.pause();
 
       if (ylwPlayer.powerUp && !redPlayer.powerUp) {
         const ylwWins = new Image();
@@ -345,7 +344,6 @@ function animate() {
       winMusic.play();
       forestMusic.pause();
       cityMusic.pause();
-      powerUpMusic.pause();
       const redWins = new Image();
       redWins.src = "./docs/assets/red_wins.png";
       redWins.onload = () => ctx.drawImage(redWins, 340, 115);
@@ -362,7 +360,6 @@ function animate() {
       winMusic.play();
       forestMusic.pause();
       cityMusic.pause();
-      powerUpMusic.pause();
       const ylwWins = new Image();
       ylwWins.src = "./docs/assets/ylw_wins.png";
       ylwWins.onload = () => ctx.drawImage(ylwWins, 340, 115);
@@ -452,6 +449,7 @@ newGameButton.onclick = function () {
   forestMusic.pause()
   cityMusic.pause();
   mountainMusic.pause();
+  currentLevel.powerUpsArr = [];
   currentLevel = [];
   framesX = 0;
   cancelAnimationFrame(animationId);
