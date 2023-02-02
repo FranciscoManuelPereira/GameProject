@@ -39,6 +39,7 @@ ylwPlayer.update();
 //----------------------------------LEVELS
 const level1 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map1, "forest", "#75b565");
 const level2 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map2, "city", "#bdbdbd");
+const level3 = new Level(ctx, canvas.width, canvas.height, redPlayer, ylwPlayer, map3, "mountain", "#bdbdbd");
 
 let currentLevel = "";
 
